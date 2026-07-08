@@ -19,7 +19,7 @@ if [[ -z "${GITHUB_TOKEN:-}" ]]; then
   echo ""
   echo "请按以下步骤操作："
   echo "1. 打开 https://github.com/settings/tokens/new"
-  echo "2. Note 填 sanaitang-forms，勾选 repo 权限"
+  echo "2. Note 填 sanaitang-forms，勾选 repo + workflow 权限"
   echo "3. 生成并复制 token，然后执行："
   echo ""
   echo "   GITHUB_TOKEN=你的token ./scripts/push-to-github.sh"
@@ -30,7 +30,9 @@ if [[ -z "${GITHUB_TOKEN:-}" ]]; then
 fi
 
 echo "→ 推送到 https://github.com/${REPO} (${BRANCH})"
-git push "https://${GITHUB_TOKEN}@github.com/${REPO}.git" "${BRANCH}"
+# GitHub 要求：用户名用 x-access-token，密码才是 PAT（不能写成 https://TOKEN@...）
+export GIT_TERMINAL_PROMPT=0
+git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${REPO}.git" "${BRANCH}"
 
 echo ""
 echo "✅ 推送成功！"
