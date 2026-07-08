@@ -3,7 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "description": "三艾堂在线测试多表单平台 · Netlify + Supabase",
+  "scripts": {
+    "deploy": "./scripts/deploy-netlify.sh",
+    "dev": "npx netlify-cli dev"
+  },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.1"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.38.1"
   }
 }
