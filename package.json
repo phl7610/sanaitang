@@ -1,0 +1,9 @@
+{
+  "name": "sanaitang-online-forms",
+  "version": "1.0.0",
+  "private": true,
+  "description": "三艾堂在线测试多表单平台 · Netlify + Supabase",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.1"
+  }
+}

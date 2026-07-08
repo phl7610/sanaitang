@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>三艾堂 · 在线测试数据中心</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #3d5c3a;
+  --green-bg: #eef3ec;
+  --ink: #1a1a18;
+  --muted: #6b6b64;
+  --border: #e8e4dc;
+  --bg: #f7f3ec;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans SC', sans-serif; background: var(--bg); color: var(--ink); font-size: 14px; }
+.hidden { display: none !important; }
+
+/* Login */
+.login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.login-box { background: #fff; border-radius: 12px; padding: 36px; width: 100%; max-width: 380px; box-shadow: 0 8px 32px rgba(0,0,0,.08); }
+.login-box h1 { font-size: 20px; color: var(--green); margin-bottom: 8px; }
+.login-box p { color: var(--muted); margin-bottom: 24px; font-size: 13px; }
+.login-box input { width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 15px; margin-bottom: 14px; }
+.login-box button { width: 100%; padding: 12px; background: var(--green); color: #fff; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; font-weight: 600; }
+.login-box .err { color: #b53030; font-size: 12px; margin-top: 8px; }
+
+/* Layout */
+.header { background: var(--green); color: #fff; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; }
+.header h1 { font-size: 17px; font-weight: 600; }
+.header button { background: rgba(255,255,255,.15); border: none; color: #fff; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 13px; }
+.container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+/* Tabs */
+.tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.tab { padding: 8px 16px; border-radius: 20px; border: 1px solid var(--border); background: #fff; cursor: pointer; font-size: 13px; }
+.tab.active { background: var(--green); color: #fff; border-color: var(--green); }
+.tab .count { opacity: .7; font-size: 11px; margin-left: 4px; }
+
+/* Toolbar */
+.toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; align-items: center; }
+.toolbar select, .toolbar input { padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; background: #fff; }
+.btn { padding: 8px 16px; border-radius: 6px; border: none; cursor: pointer; font-size: 13px; font-weight: 500; }
+.btn-primary { background: var(--green); color: #fff; }
+.btn-outline { background: #fff; border: 1px solid var(--green); color: var(--green); }
+
+/* Table */
+.table-wrap { background: #fff; border-radius: 10px; overflow: auto; border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; min-width: 900px; }
+th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+th { background: var(--green-bg); font-size: 12px; color: var(--muted); font-weight: 500; white-space: nowrap; }
+tr:hover td { background: #fafaf8; }
+.status { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; }
+.status-new { background: #fff3e0; color: #e65100; }
+.status-contacted { background: #e3f2fd; color: #1565c0; }
+.status-booked { background: var(--green-bg); color: var(--green); }
+.status-visited { background: #e8f5e9; color: #2e7d32; }
+.status-invalid { background: #fce4ec; color: #c62828; }
+.link-btn { color: var(--green); cursor: pointer; text-decoration: underline; font-size: 12px; border: none; background: none; }
+
+/* Pagination */
+.pagination { display: flex; gap: 8px; align-items: center; justify-content: center; margin-top: 16px; }
+.pagination button { padding: 6px 12px; border: 1px solid var(--border); background: #fff; border-radius: 6px; cursor: pointer; }
+.pagination button:disabled { opacity: .4; cursor: not-allowed; }
+
+/* Modal */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.4); display: flex; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
+.modal { background: #fff; border-radius: 12px; max-width: 640px; width: 100%; max-height: 85vh; overflow: auto; padding: 24px; }
+.modal h2 { font-size: 18px; margin-bottom: 16px; color: var(--green); }
+.detail-row { margin-bottom: 10px; font-size: 13px; line-height: 1.7; }
+.detail-row strong { color: var(--muted); display: inline-block; min-width: 80px; }
+.modal textarea { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; margin-top: 8px; font-size: 13px; min-height: 60px; }
+.modal-actions { display: flex; gap: 10px; margin-top: 16px; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.stat-card { background: #fff; border-radius: 10px; padding: 16px; border: 1px solid var(--border); }
+.stat-card .num { font-size: 28px; font-weight: 600; color: var(--green); }
+.stat-card .label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.empty { text-align: center; padding: 48px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div id="loginView" class="login-wrap">
+  <div class="login-box">
+    <h1>三艾堂 · 数据中心</h1>
+    <p>在线测试线索管理与导出</p>
+    <input type="password" id="passwordInput" placeholder="管理密码" autocomplete="current-password">
+    <button onclick="doLogin()">登录</button>
+    <div class="err hidden" id="loginErr"></div>
+  </div>
+</div>
+
+<div id="adminView" class="hidden">
+  <div class="header">
+    <h1>三艾堂 · 在线测试数据中心</h1>
+    <button onclick="doLogout()">退出登录</button>
+  </div>
+  <div class="container">
+    <div class="stats" id="statsRow"></div>
+    <div class="tabs" id="formTabs"></div>
+    <div class="toolbar">
+      <select id="statusFilter" onchange="loadLeads(1)">
+        <option value="">全部状态</option>
+        <option value="new">未联系</option>
+        <option value="contacted">已联系</option>
+        <option value="booked">已预约</option>
+        <option value="visited">已到院</option>
+        <option value="invalid">无效</option>
+      </select>
+      <input type="date" id="dateFrom" onchange="loadLeads(1)">
+      <span>—</span>
+      <input type="date" id="dateTo" onchange="loadLeads(1)">
+      <button class="btn btn-primary" onclick="exportCsv()">导出 CSV</button>
+      <button class="btn btn-outline" onclick="loadLeads(currentPage)">刷新</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>提交时间</th>
+            <th>表单</th>
+            <th>姓名</th>
+            <th>手机</th>
+            <th>性别</th>
+            <th>出生年</th>
+            <th>主结果</th>
+            <th>状态</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="leadsBody"></tbody>
+      </table>
+      <div class="empty hidden" id="emptyState">暂无数据</div>
+    </div>
+    <div class="pagination" id="pagination"></div>
+  </div>
+</div>
+
+<div id="detailModal" class="modal-overlay hidden" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <h2>线索详情</h2>
+    <div id="detailContent"></div>
+    <div style="margin-top:16px">
+      <strong>跟进状态</strong>
+      <select id="detailStatus" style="margin-left:8px;padding:6px 10px;border-radius:6px;border:1px solid var(--border)">
+        <option value="new">未联系</option>
+        <option value="contacted">已联系</option>
+        <option value="booked">已预约</option>
+        <option value="visited">已到院</option>
+        <option value="invalid">无效</option>
+      </select>
+    </div>
+    <div>
+      <strong>备注</strong>
+      <textarea id="detailNote" placeholder="客服备注…"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="saveDetail()">保存</button>
+      <button class="btn btn-outline" onclick="closeModal()">关闭</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = '/.netlify/functions';
+const TOKEN_KEY = 'sanaitang_admin_token';
+let token = localStorage.getItem(TOKEN_KEY) || '';
+let forms = [];
+let currentForm = '';
+let currentPage = 1;
+let currentLead = null;
+let leadsCache = {};
+
+const STATUS_LABELS = { new: '未联系', contacted: '已联系', booked: '已预约', visited: '已到院', invalid: '无效' };
+
+function authHeaders() {
+  return { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' };
+}
+
+async function doLogin() {
+  const password = document.getElementById('passwordInput').value;
+  const errEl = document.getElementById('loginErr');
+  errEl.classList.add('hidden');
+  try {
+    const res = await fetch(API + '/admin-login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || '登录失败');
+    token = data.token;
+    localStorage.setItem(TOKEN_KEY, token);
+    showAdmin();
+  } catch (e) {
+    errEl.textContent = e.message;
+    errEl.classList.remove('hidden');
+  }
+}
+
+function doLogout() {
+  token = '';
+  localStorage.removeItem(TOKEN_KEY);
+  document.getElementById('loginView').classList.remove('hidden');
+  document.getElementById('adminView').classList.add('hidden');
+}
+
+async function showAdmin() {
+  document.getElementById('loginView').classList.add('hidden');
+  document.getElementById('adminView').classList.remove('hidden');
+  await loadForms();
+  await loadLeads(1);
+}
+
+async function loadForms() {
+  const res = await fetch(API + '/admin-forms', { headers: authHeaders() });
+  if (res.status === 401) { doLogout(); return; }
+  const data = await res.json();
+  forms = data.forms || [];
+  renderTabs();
+  renderStats();
+}
+
+function renderTabs() {
+  const el = document.getElementById('formTabs');
+  const total = forms.reduce((s, f) => s + f.leadCount, 0);
+  let html = `<div class="tab ${!currentForm ? 'active' : ''}" onclick="selectForm('')">全部<span class="count">(${total})</span></div>`;
+  forms.forEach(f => {
+    html += `<div class="tab ${currentForm === f.slug ? 'active' : ''}" onclick="selectForm('${f.slug}')">${f.name}<span class="count">(${f.leadCount})</span></div>`;
+  });
+  el.innerHTML = html;
+}
+
+function renderStats() {
+  const total = forms.reduce((s, f) => s + f.leadCount, 0);
+  document.getElementById('statsRow').innerHTML = `
+    <div class="stat-card"><div class="num">${forms.length}</div><div class="label">已注册表单</div></div>
+    <div class="stat-card"><div class="num">${total}</div><div class="label">累计线索</div></div>
+    <div class="stat-card"><div class="num">${forms.find(f=>f.slug==='sanfu-quiz')?.leadCount||0}</div><div class="label">三伏自测</div></div>`;
+}
+
+function selectForm(slug) {
+  currentForm = slug;
+  renderTabs();
+  loadLeads(1);
+}
+
+async function loadLeads(page) {
+  currentPage = page;
+  const params = new URLSearchParams({ page, limit: 20 });
+  if (currentForm) params.set('form', currentForm);
+  const status = document.getElementById('statusFilter').value;
+  if (status) params.set('status', status);
+  const from = document.getElementById('dateFrom').value;
+  const to = document.getElementById('dateTo').value;
+  if (from) params.set('from', from);
+  if (to) params.set('to', to);
+
+  const res = await fetch(API + '/admin-leads?' + params, { headers: authHeaders() });
+  if (res.status === 401) { doLogout(); return; }
+  const data = await res.json();
+  renderTable(data.leads || []);
+  renderPagination(data.pagination);
+}
+
+function renderTable(leads) {
+  const tbody = document.getElementById('leadsBody');
+  const empty = document.getElementById('emptyState');
+  if (!leads.length) {
+    tbody.innerHTML = '';
+    empty.classList.remove('hidden');
+    return;
+  }
+  empty.classList.add('hidden');
+  leadsCache = {};
+  tbody.innerHTML = leads.map(l => {
+    leadsCache[l.id] = l;
+    return `
+    <tr>
+      <td>${formatDate(l.createdAt)}</td>
+      <td>${l.formName || '—'}</td>
+      <td>${esc(l.name)}</td>
+      <td>${l.phoneMasked || l.phone}</td>
+      <td>${l.gender || '—'}</td>
+      <td>${l.birthYear || '—'}</td>
+      <td>${esc(l.resultSummary || '—')}</td>
+      <td><span class="status status-${l.status}">${STATUS_LABELS[l.status] || l.status}</span></td>
+      <td><button class="link-btn" onclick="openDetail('${l.id}')">详情</button></td>
+    </tr>`;
+  }).join('');
+}
+
+function renderPagination(p) {
+  if (!p) return;
+  const el = document.getElementById('pagination');
+  el.innerHTML = `
+    <button ${p.page <= 1 ? 'disabled' : ''} onclick="loadLeads(${p.page - 1})">上一页</button>
+    <span>第 ${p.page} / ${p.totalPages || 1} 页，共 ${p.total} 条</span>
+    <button ${p.page >= p.totalPages ? 'disabled' : ''} onclick="loadLeads(${p.page + 1})">下一页</button>`;
+}
+
+function openDetail(id) {
+  const lead = leadsCache[id];
+  if (!lead) return;
+  currentLead = lead;
+  const d = lead.resultDetail || {};
+  const w = d.wylqReport || {};
+  document.getElementById('detailContent').innerHTML = `
+    <div class="detail-row"><strong>手机</strong>${lead.phone}</div>
+    <div class="detail-row"><strong>联系时段</strong>${lead.contactTime || '—'}</div>
+    <div class="detail-row"><strong>主证型</strong>${d.primarySyndrome || lead.resultSummary || '—'}</div>
+    <div class="detail-row"><strong>兼夹</strong>${d.secondarySyndrome || '—'}</div>
+    <div class="detail-row"><strong>五运六气</strong>${w.ganzhi || '—'} · ${w.wuyun || '—'} · 匹配 ${w.matchScore || '—'}%</div>
+    <div class="detail-row"><strong>回访话术</strong><br>${esc(w.csScript || '—')}</div>
+    <div class="detail-row"><strong>三伏要点</strong><br>${esc(w.sanfuAdvice || '—')}</div>`;
+  document.getElementById('detailStatus').value = lead.status || 'new';
+  document.getElementById('detailNote').value = lead.adminNote || '';
+  document.getElementById('detailModal').classList.remove('hidden');
+}
+
+window.openDetail = openDetail;
+
+function closeModal() {
+  document.getElementById('detailModal').classList.add('hidden');
+  currentLead = null;
+}
+
+async function saveDetail() {
+  if (!currentLead) return;
+  const res = await fetch(API + '/admin-leads', {
+    method: 'PATCH',
+    headers: authHeaders(),
+    body: JSON.stringify({
+      id: currentLead.id,
+      status: document.getElementById('detailStatus').value,
+      adminNote: document.getElementById('detailNote').value,
+    }),
+  });
+  if (res.ok) { closeModal(); loadLeads(currentPage); loadForms(); }
+}
+
+async function exportCsv() {
+  const params = new URLSearchParams();
+  if (currentForm) params.set('form', currentForm);
+  const status = document.getElementById('statusFilter').value;
+  if (status) params.set('status', status);
+  const from = document.getElementById('dateFrom').value;
+  const to = document.getElementById('dateTo').value;
+  if (from) params.set('from', from);
+  if (to) params.set('to', to);
+
+  const res = await fetch(API + '/export-leads?' + params, { headers: authHeaders() });
+  if (!res.ok) { alert('导出失败'); return; }
+  const blob = await res.blob();
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'leads_export.csv';
+  a.click();
+}
+
+function formatDate(iso) {
+  if (!iso) return '—';
+  return new Date(iso).toLocaleString('zh-CN', { month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit' });
+}
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+document.getElementById('passwordInput').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+if (token) showAdmin();
+</script>
+</body>
+</html>
