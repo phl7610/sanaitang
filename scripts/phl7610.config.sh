@@ -11,3 +11,4 @@ SUPABASE_URL="https://${SUPABASE_PROJECT_REF}.supabase.co"
 # NETLIFY_SITE_ID=
 
 NETLIFY_SITE_NAME="sanaitang"
+NETLIFY_ACCOUNT_SLUG="sanaitang"
