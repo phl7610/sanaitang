@@ -4,8 +4,8 @@
   "private": true,
   "description": "三艾堂在线测试多表单平台 · Netlify + Supabase",
   "scripts": {
-    "deploy": "./scripts/deploy-netlify.sh",
-    "setup": "./scripts/full-setup.sh",
+    "deploy": "./scripts/setup-phl7610.sh",
+    "setup": "./scripts/setup-phl7610.sh",
     "setup:db": "node scripts/setup-supabase.mjs",
     "dev": "npx netlify-cli dev"
   },
