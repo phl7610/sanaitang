@@ -2,7 +2,7 @@
 # 一键推送到 GitHub（首次运行前需配置 Token）
 set -euo pipefail
 
-REPO="seadragon123/sanaitang-forms"
+REPO="phl7610/sanaitang"
 BRANCH="main"
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 
@@ -19,7 +19,7 @@ if [[ -z "${GITHUB_TOKEN:-}" ]]; then
   echo ""
   echo "请按以下步骤操作："
   echo "1. 打开 https://github.com/settings/tokens/new"
-  echo "2. Note 填 sanaitang-forms，勾选 repo + workflow 权限"
+  echo "2. Note 填 sanaitang，勾选 repo + workflow 权限"
   echo "3. 生成并复制 token，然后执行："
   echo ""
   echo "   GITHUB_TOKEN=你的token ./scripts/push-to-github.sh"
@@ -38,7 +38,4 @@ echo ""
 echo "✅ 推送成功！"
 echo "   仓库：https://github.com/${REPO}"
 echo ""
-echo "下一步（Netlify 自动部署）："
-echo "   1. Netlify → Import from Git → 选 ${REPO}"
-echo "   或在 GitHub Secrets 配置 NETLIFY_AUTH_TOKEN + NETLIFY_SITE_ID"
-echo "   详见 AUTO-DEPLOY.md"
+echo "下一步：Netlify 已连接 GitHub 时，push 后会自动部署（见 AUTO-DEPLOY.md）"

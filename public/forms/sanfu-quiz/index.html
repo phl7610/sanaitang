@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>你的老毛病，三伏能断根吗？ · 三艾堂免费自测</title>
-<meta name="description" content="90秒免费测出你的三伏调理证型，领取专属刮·灸·油·贴方案，冬病夏治正当时">
+<meta name="description" content="90秒免费测出你的三伏调理证型，领取专属刮·灸·油·封方案，冬病夏治正当时">
 <meta property="og:title" content="你的老毛病，三伏能断根吗？">
 <meta property="og:description" content="免费自测 · 90秒出结果 · 三艾堂18年三伏调理经验">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -159,7 +159,7 @@ body {
   padding: 10px 6px;
 }
 .countdown-box .date-item .phase { font-size: 11px; color: var(--ink-lt); }
-.countdown-box .date-item .day { font-size: 13px; font-weight: 600; color: var(--green); margin-top: 2px; }
+.countdown-box .date-item .day { font-size: 12px; font-weight: 600; color: var(--green); margin-top: 2px; line-height: 1.35; }
 .feature-list {
   list-style: none;
   margin: 20px 0;
@@ -523,6 +523,121 @@ body {
   box-shadow: 0 4px 16px rgba(181, 101, 29, 0.35);
 }
 .btn-cta:hover { filter: brightness(1.05); }
+.btn-cta-pulse {
+  position: relative;
+  overflow: hidden;
+  animation: ctaPulse 1.6s ease-in-out infinite;
+}
+.btn-cta-pulse.btn-cta-hero {
+  overflow: hidden;
+}
+.btn-cta-pulse::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: skewX(-18deg);
+  animation: ctaShimmer 2.2s ease-in-out infinite;
+}
+.btn-cta-pulse:hover {
+  animation-play-state: paused;
+}
+.btn-cta-pulse:hover::after {
+  animation-play-state: paused;
+}
+@keyframes ctaPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 4px 16px rgba(181, 101, 29, 0.35);
+  }
+  50% {
+    transform: scale(1.04);
+    box-shadow: 0 6px 22px rgba(181, 101, 29, 0.55), 0 0 0 3px rgba(181, 101, 29, 0.18);
+  }
+}
+@keyframes ctaShimmer {
+  0% { left: -120%; }
+  45%, 100% { left: 140%; }
+}
+.btn-cta-hero {
+  padding: 18px 16px;
+  font-size: 17px;
+  line-height: 1.35;
+  min-height: 56px;
+}
+.btn-cta-badge {
+  position: absolute;
+  top: 0;
+  right: 12px;
+  background: linear-gradient(135deg, #d4380d, #f5222d);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 11px;
+  border-radius: 20px;
+  letter-spacing: 0.06em;
+  box-shadow: 0 2px 10px rgba(212, 56, 13, 0.45);
+  animation: badgePulse 2s ease-in-out infinite;
+  z-index: 3;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+@keyframes badgePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+#screenWelcome .content {
+  padding-bottom: 145px;
+}
+.welcome-sticky-cta {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  width: 100%;
+  max-width: 480px;
+  padding: 6px 16px calc(14px + env(safe-area-inset-bottom, 0px));
+  background: linear-gradient(to top, var(--cream) 78%, rgba(247, 243, 236, 0));
+  border-top: 1px solid var(--parchment);
+  z-index: 200;
+  transform: translateX(-50%) translateY(110%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+  overflow: visible;
+}
+.welcome-sticky-cta.visible {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.sticky-cta-hint {
+  text-align: center;
+  font-size: 12px;
+  color: var(--green);
+  margin-bottom: 10px;
+  letter-spacing: 0.04em;
+}
+.sticky-cta-wrap {
+  position: relative;
+  padding-top: 14px;
+  overflow: visible;
+}
+.sticky-cta-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 14px;
+  border: 2px solid rgba(181, 101, 29, 0.35);
+  animation: ctaRing 1.8s ease-out infinite;
+  pointer-events: none;
+}
+@keyframes ctaRing {
+  0% { transform: scale(1); opacity: 0.75; }
+  100% { transform: scale(1.06); opacity: 0; }
+}
 
 /* ── Question ── */
 .q-num {
@@ -566,6 +681,47 @@ body {
   background: var(--green-bg);
   color: var(--green);
   font-weight: 500;
+}
+.option.option-neutral {
+  border-style: dashed;
+  border-color: var(--ink-lt);
+  background: var(--cream);
+  color: var(--ink-lt);
+  font-size: 14px;
+}
+.option.option-neutral:hover,
+.option.option-neutral:active {
+  border-color: var(--ink-lt);
+  background: var(--parchment);
+}
+.option.option-neutral.selected {
+  border-color: var(--ink-lt);
+  background: var(--parchment);
+  color: var(--ink-mid);
+  font-weight: 500;
+}
+.options.locked .option {
+  pointer-events: none;
+  opacity: 0.85;
+}
+.quiz-hint {
+  font-size: 12px;
+  color: var(--ink-lt);
+  text-align: center;
+  margin: 0 0 4px;
+}
+.quiz-footer {
+  padding-top: 8px;
+}
+.btn-back-link {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--ink-lt);
+  font-size: 13px;
+  padding: 10px;
+  cursor: pointer;
 }
 
 /* ── Lead Form ── */
@@ -819,6 +975,10 @@ body {
     box-shadow: var(--shadow);
     background: var(--cream);
   }
+  .welcome-sticky-cta {
+    bottom: 20px;
+    border-radius: 0 0 16px 16px;
+  }
 }
 </style>
 </head>
@@ -826,11 +986,11 @@ body {
 
 <div class="app" id="app">
   <div class="top-bar">
-    <div class="brand">三艾堂 · 彭海龙医师</div>
+    <div class="brand">三艾堂医疗级调养中心</div>
     <h1 id="screenTitle">三伏免费自测</h1>
     <div class="progress-wrap" id="progressWrap" style="display:none">
       <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-      <span class="progress-text" id="progressText">1 / 10</span>
+      <span class="progress-text" id="progressText">1 / 12</span>
     </div>
   </div>
 
@@ -840,19 +1000,19 @@ body {
       <div class="welcome-hero">
         <div class="hero-tag">🔥 2026 三伏限时免费</div>
         <h2>你的老毛病<br>三伏天能<span style="color:var(--ochre)">断根</span>吗？</h2>
-        <p class="hero-sub">贴了三伏贴没效果？可能是<strong>证型不对</strong><br><em>90秒免费自测</em>，找出真正适合你的调理方案</p>
+        <p class="hero-sub"><em>90秒免费自测</em>，找出真正适合你的调理方案</p>
       </div>
       <div class="social-proof">
         <span class="dot"></span>
         <span id="liveCount">已有 2,847 人完成自测</span>
       </div>
       <div class="countdown-box">
-        <div class="days-left" id="daysLeftBanner">⏳ 距离初伏还有 — 天，错过再等一年</div>
+        <div class="days-left" id="daysLeftBanner">2026三伏调理黄金期，错过再等一年</div>
         <div class="label">2026 三伏黄金窗口</div>
         <div class="dates">
-          <div class="date-item"><div class="phase">初伏</div><div class="day">7月11日</div></div>
-          <div class="date-item"><div class="phase">中伏</div><div class="day">7月21日</div></div>
-          <div class="date-item"><div class="phase">末伏</div><div class="day">8月10日</div></div>
+          <div class="date-item"><div class="phase">初伏</div><div class="day">7月15日-7月24日</div></div>
+          <div class="date-item"><div class="phase">中伏</div><div class="day">7月25日-8月13日</div></div>
+          <div class="date-item"><div class="phase">末伏</div><div class="day">8月14日-8月23日</div></div>
         </div>
       </div>
       <ul class="pain-list">
@@ -860,14 +1020,12 @@ body {
         <li><span class="emoji">🤧</span><span>秋冬必犯<strong>鼻炎咳嗽</strong>？</span></li>
         <li><span class="emoji">🌸</span><span>经期<strong>痛经宫寒</strong>难消？</span></li>
         <li><span class="emoji">💆</span><span>空调房<strong>颈肩僵痛</strong>？</span></li>
+        <li><span class="emoji">🫃</span><span><strong>腹部肥胖</strong>，减重难？</span></li>
       </ul>
       <div class="gift-banner">
         测完即领 <strong>专属调理方案</strong><br>
-        彭海龙医师团队 · 18年三伏经验 · 刮·灸·油·贴四法合璧
+        三艾堂医师团队 · 18年三伏经验 · 刮·灸·油·封四法合璧
       </div>
-    </div>
-    <div class="footer-actions">
-      <button class="btn btn-primary btn-cta" onclick="startQuiz()">免费测一测，看看我适合哪种调理 →</button>
     </div>
   </div>
 
@@ -878,9 +1036,9 @@ body {
       <div class="q-text" id="qText"></div>
       <div class="options" id="qOptions"></div>
     </div>
-    <div class="footer-actions">
-      <button class="btn btn-primary" id="btnNext" disabled onclick="nextQuestion()">下一题</button>
-      <button class="btn btn-secondary" id="btnPrev" onclick="prevQuestion()" style="display:none">上一题</button>
+    <div class="footer-actions quiz-footer">
+      <p class="quiz-hint">点选答案自动下一题 · 都不太符合请选最后一项</p>
+      <button type="button" class="btn-back-link" id="btnPrev" onclick="prevQuestion()" style="display:none">← 上一题</button>
     </div>
   </div>
 
@@ -896,7 +1054,7 @@ body {
         <div class="teaser-title">📋 您的专属报告包含：</div>
         <div class="teaser-item">✅ 主证型深度解读 + 典型表现对照</div>
         <div class="teaser-item">✅ 五运六气先天体质评估（需出生年份）</div>
-        <div class="teaser-item">✅ 刮·灸·油·贴 四法调理路径</div>
+        <div class="teaser-item">✅ 刮·灸·油·封 四法调理路径</div>
         <div class="teaser-item">✅ 三伏最佳调理时机与注意事项</div>
         <div class="teaser-item">✅ 医师团队 24 小时内电话解读</div>
         <div class="lock-hint">🔒 填写下方信息即可解锁完整报告</div>
@@ -906,30 +1064,30 @@ body {
         <div class="benefit-chip"><span class="icon">👨‍⚕️</span>医师解读</div>
         <div class="benefit-chip"><span class="icon">📅</span>优先预约</div>
       </div>
-      <form id="leadForm" onsubmit="submitLead(event)">
+      <form id="leadForm" novalidate onsubmit="handleLeadFormSubmit(event)">
         <div class="form-group">
           <label>您的称呼 <span class="req">*</span></label>
-          <input type="text" name="name" required placeholder="如：王女士 / 李先生" maxlength="20">
+          <input type="text" name="name" placeholder="如：王女士 / 李先生" maxlength="20">
         </div>
         <div class="form-group">
           <label>手机号 <span class="req">*</span></label>
-          <input type="tel" name="phone" required placeholder="接收报告解读，不会骚扰" pattern="1[3-9]\d{9}" maxlength="11">
+          <input type="tel" name="phone" placeholder="接收报告解读，不会骚扰" maxlength="11" inputmode="numeric">
         </div>
         <div class="form-group">
           <label>出生年份 <span class="req">*</span></label>
-          <select name="birthYear" id="birthYear" required>
+          <select name="birthYear" id="birthYear">
             <option value="">请选择出生年份</option>
           </select>
-          <div class="hint">用于五运六气先天体质推算</div>
+          <div class="hint">请填写真实的出生年份，用于五运六气先天体质推算</div>
         </div>
         <div class="form-group">
           <label>性别 <span class="req">*</span></label>
           <div class="gender-group" id="genderGroup">
             <label class="gender-btn" data-value="女">
-              <input type="radio" name="gender" value="女" required> 👩 女性
+              <input type="radio" name="gender" value="女"> 👩 女性
             </label>
             <label class="gender-btn" data-value="男">
-              <input type="radio" name="gender" value="男" required> 👨 男性
+              <input type="radio" name="gender" value="男"> 👨 男性
             </label>
           </div>
         </div>
@@ -938,15 +1096,15 @@ body {
           <select name="contactTime">
             <option value="">请选择（可选）</option>
             <option value="上午9-12点">上午 9—12 点</option>
-            <option value="下午2-6点">下午 2—6 点</option>
-            <option value="晚上7-9点">晚上 7—9 点</option>
+            <option value="中午12-14点">中午 12—14 点</option>
+            <option value="下午14-18点">下午 14—18 点</option>
           </select>
         </div>
         <p class="privacy-note">🔒 信息严格保密，仅用于三伏调理咨询</p>
       </form>
     </div>
     <div class="footer-actions">
-      <button class="btn btn-primary btn-cta" form="leadForm" type="submit" id="btnSubmit">立即解锁我的专属报告 →</button>
+      <button type="button" class="btn btn-primary btn-cta" id="btnSubmit" onclick="handleLeadSubmit()">立即解锁我的专属报告 →</button>
     </div>
   </div>
 
@@ -956,6 +1114,16 @@ body {
     <div class="footer-actions">
       <button class="btn btn-primary btn-cta" onclick="shareResult()">发给朋友也测一测 →</button>
       <button class="btn btn-outline" onclick="restartQuiz()">重新测试</button>
+    </div>
+  </div>
+
+  <div class="welcome-sticky-cta visible" id="welcomeStickyCta">
+    <p class="sticky-cta-hint">测完即领专属调理方案 · 不花一分钱</p>
+    <div class="sticky-cta-wrap">
+      <span class="btn-cta-badge">限时免费</span>
+      <button type="button" class="btn btn-primary btn-cta btn-cta-pulse btn-cta-hero" onclick="startQuiz()">
+        立即免费自测，领取专属方案 →
+      </button>
     </div>
   </div>
 </div>
@@ -977,11 +1145,26 @@ const CONFIG = {
   OFFER_PRICE: '请咨询门店',
 };
 
+/** 2026 三伏日程（与欢迎页展示一致，倒计时以此为准） */
+const SANFU_2026 = {
+  CHUFU: { year: 2026, month: 7, day: 15, endMonth: 7, endDay: 24 },
+  ZHONGFU: { month: 7, day: 25, endMonth: 8, endDay: 13 },
+  MOFU: { month: 8, day: 14, endMonth: 8, endDay: 23 },
+};
+
+function getDaysToChuFu() {
+  const { year, month, day } = SANFU_2026.CHFU;
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const chuFu = new Date(year, month - 1, day);
+  return Math.round((chuFu - today) / 86400000);
+}
+
 /* ── 各证型客户证言 ── */
 const TESTIMONIALS = {
   yaotui: { text: '去年三伏做完，今年阴天下雨膝盖明显没那么酸了，终于不用靠暖宝宝过日子。', author: '— 李阿姨，58岁，腰腿膝痹' },
   huxi: { text: '以前秋天必犯鼻炎，去年三伏做完，今年春天喷嚏明显少了，同事都问我用了什么药。', author: '— Z先生，42岁，过敏性鼻炎' },
-  xiaohua: { text: '贪凉就拉肚的毛病困扰我好几年，一个三伏下来，现在冰奶茶偶尔也能喝了。', author: '— 陈女士，35岁，脾胃虚寒' },
+  xiaohua: { text: '以前肚子减了又长，三伏健脾祛湿后腰围小了一圈；贪凉拉肚的老毛病也好了不少。', author: '— 周女士，42岁，脾胃痼疾' },
   tongjing: { text: '做完一整个三伏，痛经从"下不了床"变成"微微胀"，手脚也暖了，后悔没早做。', author: '— 王小姐，28岁，胞宫寒瘀' },
   xulao: { text: '阳康后一直虚，三伏灸完膏肓和足三里，精神头回来了，不像以前那么容易累。', author: '— 张先生，45岁，虚劳诸损' },
   jingjian: { text: 'IT 码农标配的颈椎病，三伏刮灸完肩松了整整一圈，转头不再"咔咔"响。', author: '— 刘先生，32岁，颈肩综合' },
@@ -1022,10 +1205,10 @@ const SYNDROMES = {
     pathology: '脾胃虚寒，运化失司',
     icon: '🍃',
     summary: '三伏湿盛，脾阳易困，温中即助运化。',
-    symptoms: ['贪凉后易腹泻或腹胀', '食欲差、饭后易胀', '大便溏薄或黏滞不爽'],
+    symptoms: ['贪凉后易腹泻或腹胀', '食欲差、饭后易胀', '大便溏薄或黏滞不爽', '腹部肥胖松软，减重困难、易反弹'],
     method: '补刮法（脾俞、胃俞）→ 艾灸至阳、中脘、神阙、关元 → 敷贴脾俞、中脘',
-    urgency: '长夏湿困脾阳，三伏温中是恢复运化的黄金期。',
-    hook: '吃凉就坏、饭后易胀？三伏温中，比喝一年红糖水管用。',
+    urgency: '长夏湿困脾阳，三伏温中是恢复运化的黄金期；脾虚湿盛者，此时健脾祛湿，减重事半功倍。',
+    hook: '腹部肥胖、减重复反弹？三伏健脾祛湿，比节食饿肚子管用。',
     contraindication: '饭后1小时内不宜操作；当日忌食生冷瓜果。',
   },
   tongjing: {
@@ -1110,7 +1293,7 @@ const WYLQ = {
   SYNDROME_MAP: {
     yaotui: { constitution: '阳虚质倾向', organ: '肾/肝', wylqLink: '出生年水运或土运不足者，寒湿易伏于下焦，与腰腿膝痹高度相关' },
     huxi: { constitution: '气虚质倾向', organ: '肺/脾', wylqLink: '出生年金运不及或土运不足者，肺脾两虚，伏痰易留，与呼吸宿疾吻合' },
-    xiaohua: { constitution: '痰湿/阳虚质倾向', organ: '脾/胃', wylqLink: '出生年土运不及或湿土司天者，脾阳易困，与消化痼疾相符' },
+    xiaohua: { constitution: '痰湿/阳虚质倾向', organ: '脾/胃', wylqLink: '出生年土运不及或湿土司天者，脾阳易困、湿浊内停，与消化痼疾、腹部肥胖相符' },
     tongjing: { constitution: '阳虚/血瘀质倾向', organ: '肾/胞宫', wylqLink: '出生年水运不及或寒水在泉者，冲任易寒，与胞宫寒瘀相应' },
     xulao: { constitution: '气虚/阳虚质倾向', organ: '五脏', wylqLink: '出生年火运不及或金运不足者，气血生化乏源，与虚劳诸损一致' },
     jingjian: { constitution: '血瘀/气郁质倾向', organ: '督脉/膀胱', wylqLink: '出生年木运太过或风木司天者，筋脉易拘急，与颈肩综合征相关' },
@@ -1255,7 +1438,7 @@ const WYLQ = {
   },
 };
 
-/* ── 10道测试题 ── */
+/* ── 12道测试题 ── */
 const QUESTIONS = [
   {
     text: '天气变化时，您哪里最容易"报警"？',
@@ -1294,12 +1477,13 @@ const QUESTIONS = [
     ],
   },
   {
-    text: '您的消化情况更接近？',
+    text: '您的消化与体型更接近？',
     options: [
       { label: '吃凉的就拉肚/腹胀', scores: { xiaohua: 3 } },
       { label: '食欲差，饭后易胀', scores: { xiaohua: 2, xulao: 1 } },
+      { label: '腹部肥胖松软，减重困难易反弹', scores: { xiaohua: 3, xulao: 1 } },
       { label: '大便溏薄或黏马桶', scores: { xiaohua: 2, xulao: 1 } },
-      { label: '消化正常', scores: {} },
+      { label: '消化正常、体型尚可', scores: {} },
     ],
   },
   {
@@ -1318,6 +1502,24 @@ const QUESTIONS = [
       { label: '还行，但恢复慢，小感冒拖很久', scores: { xulao: 2, huxi: 1 } },
       { label: '精神尚可，就是局部老毛病烦人', scores: { yaotui: 1, jingjian: 1, huxi: 1 } },
       { label: '精力充沛', scores: {} },
+    ],
+  },
+  {
+    text: '您的睡眠状况？',
+    options: [
+      { label: '入睡困难，躺很久才能睡着', scores: { xulao: 2, tongjing: 1, jingjian: 1 } },
+      { label: '易醒、多梦，睡不踏实', scores: { xulao: 2, jingjian: 2 } },
+      { label: '常熬夜、作息不规律', scores: { xulao: 2, xiaohua: 1, jingjian: 1 } },
+      { label: '睡得还行，能一觉到天亮', scores: {} },
+    ],
+  },
+  {
+    text: '您的饮食习惯？',
+    options: [
+      { label: '爱喝冰饮、贪凉（冰咖啡/冰奶茶）', scores: { xiaohua: 3, tongjing: 1 } },
+      { label: '三餐不规律，常吃外卖快餐', scores: { xiaohua: 2, xulao: 1 } },
+      { label: '口味偏甜偏油，爱零食夜宵', scores: { xiaohua: 3, xulao: 1 } },
+      { label: '饮食清淡规律，少冷饮', scores: {} },
     ],
   },
   {
@@ -1344,6 +1546,7 @@ const QUESTIONS = [
       { label: '老寒腿 / 腰膝痛', scores: { yaotui: 4 } },
       { label: '鼻炎咳嗽 / 秋冬呼吸问题', scores: { huxi: 4 } },
       { label: '脾胃虚 / 吃凉就坏', scores: { xiaohua: 4 } },
+      { label: '腹部肥胖 / 减重大难', scores: { xiaohua: 4, xulao: 1 } },
       { label: '痛经 / 宫寒 / 手脚凉', scores: { tongjing: 4 } },
       { label: '易疲劳 / 病后虚', scores: { xulao: 4 } },
       { label: '颈肩僵痛', scores: { jingjian: 4 } },
@@ -1351,11 +1554,24 @@ const QUESTIONS = [
   },
 ];
 
+const SKIP_OPTION = { label: '以上都不太符合我', scores: {}, neutral: true };
+
+function getQuestionOptions(qIndex) {
+  const opts = QUESTIONS[qIndex].options.map(o => ({ ...o }));
+  if (!opts.some(o => o.neutral && o.label === SKIP_OPTION.label)) {
+    opts.push({ ...SKIP_OPTION });
+  }
+  return opts;
+}
+
 /* ── 状态 ── */
 let currentQ = 0;
 let answers = [];
 let scores = {};
 let leadData = {};
+let optionLock = false;
+const AUTO_ADVANCE_MS = 380;
+const scoredQuestions = new Set();
 
 function initScores() {
   scores = {};
@@ -1376,28 +1592,44 @@ function showScreen(id) {
   document.getElementById('progressWrap').style.display =
     id === 'screenQuiz' ? 'flex' : 'none';
 
+  const stickyCta = document.getElementById('welcomeStickyCta');
+  if (stickyCta) stickyCta.classList.toggle('visible', id === 'screenWelcome');
+
   window.scrollTo(0, 0);
 }
 
 function startQuiz() {
   currentQ = 0;
   answers = [];
+  scoredQuestions.clear();
   initScores();
   showScreen('screenQuiz');
   renderQuestion();
 }
 
+function applyQuestionScores(qIndex, multiplier) {
+  if (answers[qIndex] === undefined) return;
+  const opt = getQuestionOptions(qIndex)[answers[qIndex]];
+  Object.entries(opt.scores || {}).forEach(([k, v]) => {
+    scores[k] = (scores[k] || 0) + v * multiplier;
+  });
+}
+
 function renderQuestion() {
   const q = QUESTIONS[currentQ];
+  const options = getQuestionOptions(currentQ);
   document.getElementById('qNum').textContent = `第 ${currentQ + 1} 题 / 共 ${QUESTIONS.length} 题`;
   document.getElementById('qText').textContent = q.text;
 
   const container = document.getElementById('qOptions');
   container.innerHTML = '';
-  q.options.forEach((opt, i) => {
+  options.forEach((opt, i) => {
     const btn = document.createElement('button');
     btn.type = 'button';
-    btn.className = 'option' + (answers[currentQ] === i ? ' selected' : '');
+    const isNeutral = opt.neutral && opt.label === SKIP_OPTION.label;
+    btn.className = 'option' +
+      (isNeutral ? ' option-neutral' : '') +
+      (answers[currentQ] === i ? ' selected' : '');
     btn.textContent = opt.label;
     btn.onclick = () => selectOption(i);
     container.appendChild(btn);
@@ -1407,27 +1639,36 @@ function renderQuestion() {
   document.getElementById('progressFill').style.width = pct + '%';
   document.getElementById('progressText').textContent = `${currentQ + 1} / ${QUESTIONS.length}`;
 
-  document.getElementById('btnNext').disabled = answers[currentQ] === undefined;
-  document.getElementById('btnNext').textContent =
-    currentQ === QUESTIONS.length - 1 ? '查看我的初步结果 →' : '下一题';
+  container.classList.remove('locked');
+  optionLock = false;
   document.getElementById('btnPrev').style.display = currentQ > 0 ? 'block' : 'none';
 }
 
 function selectOption(idx) {
+  if (optionLock) return;
+  optionLock = true;
+  if (scoredQuestions.has(currentQ)) {
+    applyQuestionScores(currentQ, -1);
+    scoredQuestions.delete(currentQ);
+  }
   answers[currentQ] = idx;
+  const container = document.getElementById('qOptions');
+  container.classList.add('locked');
   document.querySelectorAll('#qOptions .option').forEach((el, i) => {
     el.classList.toggle('selected', i === idx);
   });
-  document.getElementById('btnNext').disabled = false;
+  setTimeout(() => {
+    nextQuestion();
+  }, AUTO_ADVANCE_MS);
 }
 
 function nextQuestion() {
   if (answers[currentQ] === undefined) return;
 
-  const opt = QUESTIONS[currentQ].options[answers[currentQ]];
-  Object.entries(opt.scores || {}).forEach(([k, v]) => {
-    scores[k] = (scores[k] || 0) + v;
-  });
+  if (!scoredQuestions.has(currentQ)) {
+    applyQuestionScores(currentQ, 1);
+    scoredQuestions.add(currentQ);
+  }
 
   if (currentQ < QUESTIONS.length - 1) {
     currentQ++;
@@ -1438,14 +1679,13 @@ function nextQuestion() {
 }
 
 function prevQuestion() {
-  if (currentQ > 0) {
-    const prevOpt = QUESTIONS[currentQ].options[answers[currentQ]];
-    Object.entries(prevOpt.scores || {}).forEach(([k, v]) => {
-      scores[k] = (scores[k] || 0) - v;
-    });
-    currentQ--;
-    renderQuestion();
+  if (optionLock || currentQ <= 0) return;
+  if (scoredQuestions.has(currentQ)) {
+    applyQuestionScores(currentQ, -1);
+    scoredQuestions.delete(currentQ);
   }
+  currentQ--;
+  renderQuestion();
 }
 
 function getRankedSyndromes() {
@@ -1465,7 +1705,7 @@ function showLeadScreen() {
     <div class="teaser-item">✅ 五运六气先天体质评估</div>
     <div class="teaser-item">✅ 专属四法调理路径（刮·灸·油·贴）</div>
     <div class="teaser-item">✅ 三伏最佳时机 + 注意事项</div>
-    <div class="teaser-item">✅ 彭海龙医师团队 24h 内解读</div>
+    <div class="teaser-item">✅ 三艾堂医师团队 24h 内解读</div>
     <div class="lock-hint">🔒 填写信息，立即解锁完整报告</div>`;
   showScreen('screenLead');
 }
@@ -1475,6 +1715,48 @@ function showToast(msg) {
   t.textContent = msg;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function validateLeadForm() {
+  const form = document.getElementById('leadForm');
+  const nameEl = form.querySelector('[name="name"]');
+  const phoneEl = form.querySelector('[name="phone"]');
+  const birthEl = form.querySelector('[name="birthYear"]');
+  const name = (nameEl.value || '').trim();
+  const phone = (phoneEl.value || '').trim();
+  const birthYear = birthEl.value;
+  const gender = form.querySelector('input[name="gender"]:checked');
+
+  if (!name) {
+    showToast('请填写您的称呼');
+    nameEl.focus();
+    return false;
+  }
+  if (!/^1[3-9]\d{9}$/.test(phone)) {
+    showToast('请填写正确的11位手机号');
+    phoneEl.focus();
+    return false;
+  }
+  if (!birthYear) {
+    showToast('请选择出生年份');
+    birthEl.focus();
+    return false;
+  }
+  if (!gender) {
+    showToast('请选择性别');
+    return false;
+  }
+  return true;
+}
+
+function handleLeadFormSubmit(e) {
+  e.preventDefault();
+  handleLeadSubmit();
+}
+
+function handleLeadSubmit() {
+  if (!validateLeadForm()) return;
+  submitLead({ preventDefault() {} });
 }
 
 async function submitLead(e) {
@@ -1490,60 +1772,65 @@ async function submitLead(e) {
     timestamp: new Date().toISOString(),
   };
 
-  const ranked = getRankedSyndromes();
-  const wylqReport = leadData.birthYear
-    ? WYLQ.generateReport(leadData.birthYear, ranked[0], ranked[1]?.score > 2 ? ranked[1] : null)
-    : null;
-
-  const payload = {
-    formSlug: CONFIG.FORM_SLUG,
-    ...leadData,
-    primarySyndrome: ranked[0].name,
-    primaryScore: ranked[0].score,
-    secondarySyndrome: ranked[1]?.score > 0 ? ranked[1].name : '',
-    allScores: scores,
-    wylqReport: wylqReport ? {
-      ganzhi: wylqReport.birth.ganzhi,
-      wuyun: wylqReport.birth.wuyunLabel,
-      sitian: wylqReport.birth.sitian,
-      matchScore: wylqReport.matchLevel.score,
-      csScript: wylqReport.csScript.replace('{name}', (leadData.name || '') + (leadData.gender === '女' ? '女士' : leadData.gender === '男' ? '先生' : '')),
-      sanfuAdvice: wylqReport.sanfuAdvice,
-    } : null,
-    source: '三伏体质自测',
-  };
-
   const btn = document.getElementById('btnSubmit');
   btn.disabled = true;
   btn.textContent = '正在生成报告…';
 
-  if (CONFIG.API_URL) {
-    try {
-      const res = await fetch(CONFIG.API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
+  try {
+    const ranked = getRankedSyndromes();
+    const wylqReport = leadData.birthYear
+      ? WYLQ.generateReport(leadData.birthYear, ranked[0], ranked[1]?.score > 2 ? ranked[1] : null)
+      : null;
+
+    const payload = {
+      formSlug: CONFIG.FORM_SLUG,
+      ...leadData,
+      primarySyndrome: ranked[0].name,
+      primaryScore: ranked[0].score,
+      secondarySyndrome: ranked[1]?.score > 0 ? ranked[1].name : '',
+      allScores: scores,
+      wylqReport: wylqReport ? {
+        ganzhi: wylqReport.birth.ganzhi,
+        wuyun: wylqReport.birth.wuyunLabel,
+        sitian: wylqReport.birth.sitian,
+        matchScore: wylqReport.matchLevel.score,
+        csScript: wylqReport.csScript.replace('{name}', (leadData.name || '') + (leadData.gender === '女' ? '女士' : leadData.gender === '男' ? '先生' : '')),
+        sanfuAdvice: wylqReport.sanfuAdvice,
+      } : null,
+      source: '三伏体质自测',
+    };
+
+    if (CONFIG.API_URL) {
+      try {
+        const res = await fetch(CONFIG.API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          console.warn('API submit failed', err);
+        }
+      } catch (err) {
         console.warn('API submit failed', err);
       }
-    } catch (err) {
-      console.warn('API submit failed', err);
     }
+
+    try {
+      const logs = JSON.parse(localStorage.getItem('sanfu_leads') || '[]');
+      logs.push(payload);
+      localStorage.setItem('sanfu_leads', JSON.stringify(logs));
+    } catch (_) {}
+
+    renderResult();
+    showScreen('screenResult');
+  } catch (err) {
+    console.error('submitLead failed', err);
+    showToast('报告生成失败，请重试');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '立即解锁我的专属报告 →';
   }
-
-  // 本地备份（API 不可用时降级）
-  try {
-    const logs = JSON.parse(localStorage.getItem('sanfu_leads') || '[]');
-    logs.push(payload);
-    localStorage.setItem('sanfu_leads', JSON.stringify(logs));
-  } catch (_) {}
-
-  btn.disabled = false;
-  btn.textContent = '立即解锁我的专属报告 →';
-  renderResult();
-  showScreen('screenResult');
 }
 
 function renderResult() {
@@ -1553,7 +1840,7 @@ function renderResult() {
   const testimonial = TESTIMONIALS[primary.id];
   const genderLabel = leadData.gender === '女' ? '女士' : leadData.gender === '男' ? '先生' : '';
 
-  const daysToChuFu = Math.ceil((new Date('2026-07-11') - new Date()) / 86400000);
+  const daysToChuFu = getDaysToChuFu();
   const urgencyText = daysToChuFu > 0
     ? `⏰ 距初伏仅剩 <strong>${daysToChuFu} 天</strong> · 名额有限，建议本周预约`
     : '🔥 三伏正在进行 · <strong>本周名额紧张</strong>，建议尽快到院';
@@ -1670,13 +1957,6 @@ document.querySelectorAll('.gender-btn').forEach(btn => {
     }
   }
 
-  const daysToChuFu = Math.ceil((new Date('2026-07-11') - new Date()) / 86400000);
-  const el = document.getElementById('daysLeftBanner');
-  if (el) {
-    el.textContent = daysToChuFu > 0
-      ? `⏳ 距离初伏还有 ${daysToChuFu} 天，错过再等一年`
-      : '🔥 三伏已开始，本周名额紧张';
-  }
   const base = 2800 + Math.floor((Date.now() % 86400000) / 3600000) * 7;
   const countEl = document.getElementById('liveCount');
   if (countEl) countEl.textContent = `已有 ${base.toLocaleString()} 人完成自测`;
@@ -1684,8 +1964,7 @@ document.querySelectorAll('.gender-btn').forEach(btn => {
 </script>
 
 <p class="disclaimer">
-  本自测基于三艾堂六大证型体系与五运六气推理模型，结果仅供参考，不能替代医师面诊。<br>
-  具体调理方案请在医师指导下执行。
+  本自测基于三艾堂五大证型体系与五运六气推理模型，结果仅供参考，不能替代医师面诊。<br>
 </p>
 
 </body>

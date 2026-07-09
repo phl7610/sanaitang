@@ -4,7 +4,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
-REPO="seadragon123/sanaitang-forms"
+REPO="phl7610/sanaitang"
 BRANCH="main"
 
 if [[ -f .env.local ]]; then

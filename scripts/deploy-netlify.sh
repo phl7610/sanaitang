@@ -4,7 +4,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
-SITE_NAME="${NETLIFY_SITE_NAME:-sanaitang-forms}"
+SITE_NAME="${NETLIFY_SITE_NAME:-satform}"
 
 if [[ -f .env.local ]]; then
   set -a
@@ -24,6 +24,7 @@ if [[ -z "${NETLIFY_AUTH_TOKEN:-}" ]]; then
 fi
 
 export NETLIFY_AUTH_TOKEN
+export CI=true
 
 echo "→ 安装依赖…"
 npm install
@@ -53,4 +54,4 @@ npx netlify-cli status 2>/dev/null || true
 echo ""
 echo "📌 连接 GitHub 实现 push 自动部署："
 echo "   https://app.netlify.com → 你的站点 → Site configuration → Build & deploy → Link repository"
-echo "   选择 seadragon123/sanaitang-forms · main · build: npm install · publish: public"
+echo "   选择 phl7610/sanaitang · main · build: npm install · publish: public"
