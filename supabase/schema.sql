@@ -1,5 +1,5 @@
 # Supabase 一键建表 SQL
-# 打开后直接 Run：https://supabase.com/dashboard/project/tbgwjtqpiavxbbjrtcyk/sql/new
+# 打开后直接 Run：https://supabase.com/dashboard/project/jbwkkdinxtaryuwrhbti/sql/new
 
 -- 表单注册表
 CREATE TABLE IF NOT EXISTS forms (

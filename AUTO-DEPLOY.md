@@ -23,8 +23,8 @@
 
 | Key | Value |
 |-----|-------|
-| `SUPABASE_URL` | `https://tbgwjtqpiavxbbjrtcyk.supabase.co` |
-| `SUPABASE_SERVICE_KEY` | 项目 `tbgwjtqpiavxbbjrtcyk` 的 **service_role** |
+| `SUPABASE_URL` | `https://jbwkkdinxtaryuwrhbti.supabase.co` |
+| `SUPABASE_SERVICE_KEY` | 项目 `jbwkkdinxtaryuwrhbti` 的 **service_role** |
 | `ADMIN_PASSWORD` | 管理后台登录密码 |
 
 5. Supabase 已执行 `supabase/schema.sql`（forms / leads 表）

@@ -9,7 +9,7 @@ cd "$ROOT"
 export CI=true
 
 # 与 supabase/schema.sql 注释、Netlify 环境变量保持一致
-EXPECTED_PROJECT_REF="tbgwjtqpiavxbbjrtcyk"
+EXPECTED_PROJECT_REF="jbwkkdinxtaryuwrhbti"
 SUPABASE_URL="https://${EXPECTED_PROJECT_REF}.supabase.co"
 
 KEY="${1:-}"

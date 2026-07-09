@@ -33,7 +33,7 @@ if ! node scripts/setup-supabase.mjs; then
   echo ""
   echo "┌─────────────────────────────────────────────────────────┐"
   echo "│ 若提示「数据表未创建」，请手动执行一次 SQL：              │"
-  echo "│ 1. 打开 https://supabase.com/dashboard/project/tbgwjtqpiavxbbjrtcyk/sql/new │"
+  echo "│ 1. 打开 https://supabase.com/dashboard/project/jbwkkdinxtaryuwrhbti/sql/new │"
   echo "│ 2. 粘贴 supabase/schema.sql 全部内容 → Run              │"
   echo "│ 3. 若 service_role 填错，在 Netlify 更新 SUPABASE_SERVICE_KEY │"
   echo "│ 4. 重新运行: ./scripts/full-setup.sh                      │"
