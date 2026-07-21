@@ -388,6 +388,36 @@ body {
   color: var(--ink-mid);
   line-height: 1.8;
 }
+.offer-card .offer-sub {
+  font-size: 15px;
+  color: var(--ink-mid);
+  line-height: 1.8;
+  margin-top: 4px;
+}
+.offer-card .offer-compare {
+  margin: 2px 0 10px;
+  line-height: 1.5;
+}
+.offer-card .offer-origin {
+  display: inline-block;
+  font-size: 14px;
+  color: var(--ink-lt);
+  text-decoration: line-through;
+  letter-spacing: 0.02em;
+  margin-top: 8px;
+}
+.offer-card .offer-desc {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ochre);
+  background: #fff8f0;
+  border: 1.5px solid var(--ochre-lt);
+  border-radius: 20px;
+  padding: 5px 14px;
+  letter-spacing: 0.06em;
+  margin-top: 2px;
+}
 .offer-card .highlight {
   font-size: 22px;
   font-weight: 700;
@@ -1105,6 +1135,13 @@ body {
           <input type="tel" name="phone" placeholder="接收报告解读，不会骚扰" maxlength="11" inputmode="numeric">
         </div>
         <div class="form-group">
+          <label>出生年份 <span class="req">*</span></label>
+          <select name="birthYear" id="birthYear">
+            <option value="">请选择出生年份</option>
+          </select>
+          <div class="hint">请填写真实的出生年份，用于五运六气先天体质推算</div>
+        </div>
+        <div class="form-group">
           <label>性别 <span class="req">*</span></label>
           <div class="gender-group" id="genderGroup">
             <label class="gender-btn" data-value="女">
@@ -1162,8 +1199,9 @@ const CONFIG = {
   CONTACT_PHONES: ['85500133', '18607312010'],
   WECHAT_QR_IMAGE: 'wechat-qr.png',
   CLINIC_NAME: '三艾堂',
-  OFFER_TEXT: '失眠首诊免费咨询',
-  OFFER_PRICE: '',
+  OFFER_PRICE: '99 元',
+  OFFER_ORIGIN: '350 元',
+  OFFER_TEXT: '睡眠调理 1 次',
 };
 
 const TESTIMONIALS = {
@@ -1305,12 +1343,12 @@ const QUESTIONS = [
     ],
   },
   {
-    text: '关于手脚与烦热，哪句更符合？',
+    text: '这样的失眠大约持续多久了？',
     options: [
-      { label: '手心脚心发热，口干', scores: { yinxu: 3 } },
-      { label: '手脚偏凉，尤其冬天', scores: { ganxue: 1, shire: 1 } },
-      { label: '淡淡烦躁，脑子停不下来', scores: { ganxue: 3, ganyu: 1 } },
-      { label: '焦躁坐立不安，心里发热', scores: { yinxu: 2, xiongge: 1 } },
+      { label: '不到 1 周', scores: {}, severity: 1 },
+      { label: '1 周到 1 个月', scores: { ganxue: 1 }, severity: 2 },
+      { label: '1 到 6 个月', scores: { ganxue: 1, ganyu: 1 }, severity: 3 },
+      { label: '半年以上 / 数年', scores: { ligan: 1, yinxu: 1 }, severity: 4 },
     ],
   },
   {
@@ -1352,12 +1390,12 @@ const QUESTIONS = [
     ],
   },
   {
-    text: '这样的失眠大约持续多久了？',
+    text: '关于手脚与烦热，哪句更符合？',
     options: [
-      { label: '不到 1 周', scores: {}, severity: 1 },
-      { label: '1 周到 1 个月', scores: { ganxue: 1 }, severity: 2 },
-      { label: '1 到 6 个月', scores: { ganxue: 1, ganyu: 1 }, severity: 3 },
-      { label: '半年以上 / 数年', scores: { ligan: 1, yinxu: 1 }, severity: 4 },
+      { label: '手心脚心发热，口干', scores: { yinxu: 3 } },
+      { label: '手脚偏凉，尤其冬天', scores: { ganxue: 1, shire: 1 } },
+      { label: '淡淡烦躁，脑子停不下来', scores: { ganxue: 3, ganyu: 1 } },
+      { label: '焦躁坐立不安，心里发热', scores: { yinxu: 2, xiongge: 1 } },
     ],
   },
   {
@@ -1572,11 +1610,14 @@ function validateLeadForm() {
   const form = document.getElementById('leadForm');
   const nameEl = form.querySelector('[name="name"]');
   const phoneEl = form.querySelector('[name="phone"]');
+  const birthEl = form.querySelector('[name="birthYear"]');
   const name = (nameEl.value || '').trim();
   const phone = (phoneEl.value || '').trim();
+  const birthYear = birthEl.value;
   const gender = form.querySelector('input[name="gender"]:checked');
   if (!name) { showToast('请填写您的称呼'); nameEl.focus(); return false; }
   if (!/^1[3-9]\d{9}$/.test(phone)) { showToast('请填写正确的11位手机号'); phoneEl.focus(); return false; }
+  if (!birthYear) { showToast('请选择出生年份'); birthEl.focus(); return false; }
   if (!gender) { showToast('请选择性别'); return false; }
   return true;
 }
@@ -1598,6 +1639,7 @@ async function submitLead(e) {
   leadData = {
     name: fd.get('name'),
     phone: fd.get('phone'),
+    birthYear: parseInt(fd.get('birthYear'), 10) || '',
     gender: fd.get('gender') || '',
     contactTime: fd.get('contactTime') || '',
     timestamp: new Date().toISOString(),
@@ -1692,8 +1734,11 @@ function renderResult() {
     <div class="urgency-banner">⚠️ ${sev.tip}<br>${primary.urgency}</div>
     <div class="offer-card">
       <h3>🎁 ${leadData.name || '您'}的专属福利</h3>
-      <p>凭此报告到馆，可享</p>
-      <div class="highlight">${CONFIG.OFFER_TEXT}</div>
+      <div class="highlight">${CONFIG.OFFER_PRICE}</div>
+      <div class="offer-compare">
+        <div class="offer-desc">${CONFIG.OFFER_TEXT}</div>
+        <div><span class="offer-origin">原价 ${CONFIG.OFFER_ORIGIN}</span></div>
+      </div>
       <p>三艾堂医师团队 · 中药+药油+艾灸+食疗四法一体 · 分证调理</p>
     </div>
     <div class="result-card">
@@ -1779,6 +1824,17 @@ document.querySelectorAll('.gender-btn').forEach(btn => {
 });
 
 (function initPage() {
+  const birthSelect = document.getElementById('birthYear');
+  if (birthSelect) {
+    const currentYear = new Date().getFullYear();
+    for (let y = currentYear - 18; y >= 1940; y--) {
+      const opt = document.createElement('option');
+      opt.value = y;
+      opt.textContent = y + ' 年';
+      birthSelect.appendChild(opt);
+    }
+  }
+
   const base = 3100 + Math.floor((Date.now() % 86400000) / 3600000) * 5;
   const countEl = document.getElementById('liveCount');
   if (countEl) countEl.textContent = `已有 ${base.toLocaleString()} 人完成自测`;
