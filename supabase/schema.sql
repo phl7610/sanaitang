@@ -1,5 +1,5 @@
-# Supabase 一键建表 SQL
-# 打开后直接 Run：https://supabase.com/dashboard/project/ehqajcltdyqhdrktudna/sql/new
+-- Supabase 一键建表 SQL
+-- 打开后直接 Run：https://supabase.com/dashboard/project/ehqajcltdyqhdrktudna/sql/new
 
 -- 表单注册表
 CREATE TABLE IF NOT EXISTS forms (
@@ -50,7 +50,9 @@ CREATE TRIGGER leads_updated_at
 
 INSERT INTO forms (slug, name, description) VALUES
   ('sanfu-quiz', '三伏体质自测', '90秒测出三伏调理证型 + 五运六气先天体质评估'),
-  ('sleep-quiz', '失眠分型自测', '90秒测出失眠中医分型 + 专属调理建议')
+  ('sleep-quiz', '失眠分型自测', '90秒测出失眠中医分型 + 专属调理建议'),
+  ('piwei-quiz', '脾胃分型自测', '90秒测出脾胃中医分型 + 专属调理建议'),
+  ('constitution-quiz', '九型体质自测', '90秒测出九型体质 + 出生年五运六气调养建议')
 ON CONFLICT (slug) DO NOTHING;
 
 ALTER TABLE forms ENABLE ROW LEVEL SECURITY;

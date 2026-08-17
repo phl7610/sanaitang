@@ -1,0 +1,1957 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>你属于哪一种中医体质？ · 三艾堂免费自测</title>
+<meta name="description" content="90秒免费测出九型体质，结合出生年五运六气生成专属调养建议">
+<meta property="og:title" content="你属于哪一种中医体质？">
+<meta property="og:description" content="免费自测 · 九型体质 + 五运六气 · 三艾堂体质调养">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #3d5c3a;
+  --green-lt: #5a7d56;
+  --green-bg: #eef3ec;
+  --ochre: #b5651d;
+  --ochre-lt: #d4844a;
+  --cream: #f7f3ec;
+  --parchment: #ede8df;
+  --ink: #1a1a18;
+  --ink-mid: #3c3c38;
+  --ink-lt: #6b6b64;
+  --gold: #c9a84c;
+  --white: #fff;
+  --shadow: 0 8px 32px rgba(61, 92, 58, 0.12);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Sans SC', 'PingFang SC', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.7;
+  font-size: 15px;
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ── */
+.top-bar {
+  background: var(--green);
+  color: #fff;
+  padding: 20px 20px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.top-bar .brand {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  opacity: 0.7;
+  margin-bottom: 4px;
+}
+.top-bar h1 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+.progress-wrap {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.progress-track {
+  flex: 1;
+  height: 4px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--gold);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+  width: 0%;
+}
+.progress-text {
+  font-size: 11px;
+  opacity: 0.75;
+  white-space: nowrap;
+}
+
+/* ── Screens ── */
+.screen {
+  flex: 1;
+  display: none;
+  flex-direction: column;
+  animation: fadeIn 0.35s ease;
+}
+.screen.active { display: flex; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.content {
+  flex: 1;
+  padding: 24px 20px;
+}
+
+/* ── Welcome ── */
+.welcome-hero {
+  text-align: center;
+  padding: 20px 0 28px;
+}
+.welcome-hero .icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+.welcome-hero h2 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 26px;
+  color: var(--green);
+  line-height: 1.4;
+  margin-bottom: 12px;
+}
+.welcome-hero p {
+  color: var(--ink-lt);
+  font-size: 14px;
+  line-height: 1.9;
+}
+.countdown-box {
+  background: var(--white);
+  border: 1px solid var(--parchment);
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin: 24px 0;
+  text-align: left;
+}
+.countdown-box .label {
+  font-size: 11px;
+  color: var(--ochre);
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+.countdown-box .dates {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+}
+.countdown-box .date-item {
+  text-align: center;
+  background: var(--green-bg);
+  border-radius: 6px;
+  padding: 10px 6px;
+}
+.countdown-box .date-item .phase { font-size: 11px; color: var(--ink-lt); }
+.countdown-box .date-item .day { font-size: 12px; font-weight: 600; color: var(--green); margin-top: 2px; line-height: 1.35; }
+.feature-list {
+  list-style: none;
+  margin: 20px 0;
+}
+.feature-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 0;
+  font-size: 14px;
+  color: var(--ink-mid);
+  border-bottom: 1px solid var(--parchment);
+}
+.feature-list li:last-child { border-bottom: none; }
+.feature-list .check {
+  color: var(--green);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* ── 引流增强 ── */
+.hero-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--ochre), #d4844a);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.08em;
+  margin-bottom: 14px;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+.hero-sub {
+  font-size: 15px;
+  color: var(--ink-mid);
+  line-height: 1.8;
+  margin-bottom: 8px;
+}
+.hero-sub em {
+  font-style: normal;
+  color: var(--ochre);
+  font-weight: 600;
+}
+.social-proof {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #fff8f0;
+  border: 1px dashed var(--ochre-lt);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin: 16px 0 20px;
+  font-size: 13px;
+  color: var(--ochre);
+}
+.social-proof .dot {
+  width: 8px; height: 8px;
+  background: #4caf50;
+  border-radius: 50%;
+  animation: blink 1.5s infinite;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.pain-list {
+  list-style: none;
+  margin: 0 0 8px;
+}
+.pain-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  background: var(--white);
+  border-radius: 10px;
+  border: 1px solid var(--parchment);
+  font-size: 14px;
+  color: var(--ink-mid);
+}
+.pain-list .emoji { font-size: 20px; flex-shrink: 0; }
+.pain-list strong { color: var(--ink); }
+.gift-banner {
+  background: linear-gradient(135deg, var(--green), var(--green-lt));
+  color: #fff;
+  border-radius: 10px;
+  padding: 14px 16px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.7;
+  margin-top: 16px;
+}
+.gift-banner strong { color: var(--gold); font-size: 15px; }
+.countdown-box .days-left {
+  text-align: center;
+  font-size: 13px;
+  color: var(--ochre);
+  font-weight: 600;
+  margin-bottom: 10px;
+  padding: 8px;
+  background: #fff8f0;
+  border-radius: 6px;
+}
+
+/* ── 留资页增强 ── */
+.lead-teaser {
+  background: var(--white);
+  border: 2px solid var(--green);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.lead-teaser::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 40px;
+  background: linear-gradient(transparent, var(--white));
+}
+.lead-teaser .teaser-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 16px;
+  color: var(--green);
+  margin-bottom: 10px;
+}
+.lead-teaser .teaser-item {
+  font-size: 13px;
+  color: var(--ink-mid);
+  padding: 6px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.lead-teaser .lock-hint {
+  text-align: center;
+  font-size: 12px;
+  color: var(--ochre);
+  margin-top: 8px;
+  font-weight: 500;
+}
+.form-intro .preview-badge {
+  background: linear-gradient(135deg, var(--ochre), #d4844a);
+  animation: none;
+}
+.benefit-strip {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.benefit-chip {
+  flex: 1;
+  min-width: 90px;
+  text-align: center;
+  background: var(--green-bg);
+  border-radius: 8px;
+  padding: 10px 6px;
+  font-size: 11px;
+  color: var(--green);
+  line-height: 1.4;
+}
+.benefit-chip .icon { font-size: 18px; display: block; margin-bottom: 4px; }
+
+/* ── 性别选择 ── */
+.gender-group {
+  display: flex;
+  gap: 10px;
+}
+.gender-btn {
+  flex: 1;
+  padding: 14px;
+  border: 1.5px solid var(--parchment);
+  border-radius: 10px;
+  background: var(--white);
+  font-size: 15px;
+  color: var(--ink-mid);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+.gender-btn:hover { border-color: var(--green-lt); background: var(--green-bg); }
+.gender-btn.selected {
+  border-color: var(--green);
+  background: var(--green-bg);
+  color: var(--green);
+  font-weight: 600;
+}
+.gender-btn input { display: none; }
+
+/* ── 结果页增强 ── */
+.match-badge {
+  display: inline-block;
+  background: var(--gold);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+.offer-card {
+  background: linear-gradient(145deg, #fff8f0, #fff);
+  border: 2px solid var(--ochre-lt);
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 14px;
+  text-align: center;
+}
+.offer-card h3 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 18px;
+  color: var(--ochre);
+  margin-bottom: 8px;
+}
+.offer-card p {
+  font-size: 13px;
+  color: var(--ink-mid);
+  line-height: 1.8;
+}
+.offer-card .offer-sub {
+  font-size: 15px;
+  color: var(--ink-mid);
+  line-height: 1.8;
+  margin-top: 4px;
+}
+.offer-card .offer-compare {
+  margin: 2px 0 10px;
+  line-height: 1.5;
+}
+.offer-card .offer-origin {
+  display: inline-block;
+  font-size: 14px;
+  color: var(--ink-lt);
+  text-decoration: line-through;
+  letter-spacing: 0.02em;
+  margin-top: 8px;
+}
+.offer-card .offer-desc {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ochre);
+  background: #fff8f0;
+  border: 1.5px solid var(--ochre-lt);
+  border-radius: 20px;
+  padding: 5px 14px;
+  letter-spacing: 0.06em;
+  margin-top: 2px;
+}
+.offer-card .highlight {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ochre);
+  margin: 10px 0;
+  font-family: 'Noto Serif SC', serif;
+}
+.testimonial {
+  background: var(--green-bg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  font-size: 13px;
+  color: var(--ink-mid);
+  line-height: 1.8;
+  position: relative;
+}
+.testimonial::before {
+  content: '"';
+  font-family: 'Noto Serif SC', serif;
+  font-size: 36px;
+  color: var(--green-lt);
+  position: absolute;
+  top: -4px; left: 10px;
+  opacity: 0.4;
+}
+.testimonial .author {
+  font-size: 11px;
+  color: var(--ink-lt);
+  margin-top: 8px;
+  text-align: right;
+}
+
+/* ── 五运六气报告 ── */
+.wylq-section {
+  background: linear-gradient(145deg, #f0f4ef, #fff);
+  border: 2px solid var(--green);
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 14px;
+}
+.wylq-section .section-badge {
+  display: inline-block;
+  background: var(--green);
+  color: #fff;
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+  letter-spacing: 0.06em;
+}
+.wylq-section h3 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 17px;
+  color: var(--green);
+  margin-bottom: 4px;
+}
+.wylq-section .ganzhi-tag {
+  font-size: 13px;
+  color: var(--ochre);
+  margin-bottom: 14px;
+}
+.wylq-grid {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.wylq-item {
+  background: var(--white);
+  border-radius: 8px;
+  padding: 12px 14px;
+  border-left: 3px solid var(--green-lt);
+}
+.wylq-item .label {
+  font-size: 11px;
+  color: var(--ink-lt);
+  letter-spacing: 0.06em;
+  margin-bottom: 4px;
+}
+.wylq-item .value {
+  font-size: 14px;
+  color: var(--ink);
+  font-weight: 500;
+  line-height: 1.6;
+}
+.wylq-item .sub {
+  font-size: 12px;
+  color: var(--ink-mid);
+  margin-top: 4px;
+  line-height: 1.7;
+}
+.wylq-cs-panel {
+  background: #1a1a18;
+  color: #e8e4dc;
+  border-radius: 10px;
+  padding: 16px;
+  margin-top: 14px;
+  font-size: 12.5px;
+  line-height: 1.85;
+}
+.wylq-cs-panel .cs-title {
+  color: var(--gold);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+.wylq-cs-panel .cs-row {
+  margin-bottom: 6px;
+}
+.wylq-cs-panel .cs-row strong {
+  color: #c9e0c5;
+}
+.wylq-cs-panel .cs-script {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.75);
+  font-style: italic;
+}
+.wylq-food {
+  background: var(--green-bg);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 13px;
+  color: var(--ink-mid);
+  line-height: 1.8;
+}
+.wylq-food strong { color: var(--green); }
+.btn-cta {
+  background: linear-gradient(135deg, var(--ochre), #d4844a);
+  box-shadow: 0 4px 16px rgba(181, 101, 29, 0.35);
+}
+.btn-cta:hover { filter: brightness(1.05); }
+.btn-cta-pulse {
+  position: relative;
+  overflow: hidden;
+  animation: ctaPulse 1.6s ease-in-out infinite;
+}
+.btn-cta-pulse.btn-cta-hero {
+  overflow: hidden;
+}
+.btn-cta-pulse::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: skewX(-18deg);
+  animation: ctaShimmer 2.2s ease-in-out infinite;
+}
+.btn-cta-pulse:hover {
+  animation-play-state: paused;
+}
+.btn-cta-pulse:hover::after {
+  animation-play-state: paused;
+}
+@keyframes ctaPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 4px 16px rgba(181, 101, 29, 0.35);
+  }
+  50% {
+    transform: scale(1.04);
+    box-shadow: 0 6px 22px rgba(181, 101, 29, 0.55), 0 0 0 3px rgba(181, 101, 29, 0.18);
+  }
+}
+@keyframes ctaShimmer {
+  0% { left: -120%; }
+  45%, 100% { left: 140%; }
+}
+.btn-cta-hero {
+  padding: 18px 16px;
+  font-size: 17px;
+  line-height: 1.35;
+  min-height: 56px;
+}
+.btn-cta-badge {
+  position: absolute;
+  top: 0;
+  right: 12px;
+  background: linear-gradient(135deg, #d4380d, #f5222d);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 11px;
+  border-radius: 20px;
+  letter-spacing: 0.06em;
+  box-shadow: 0 2px 10px rgba(212, 56, 13, 0.45);
+  animation: badgePulse 2s ease-in-out infinite;
+  z-index: 3;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+@keyframes badgePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+#screenWelcome .content {
+  padding-bottom: 145px;
+}
+.welcome-sticky-cta {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  width: 100%;
+  max-width: 480px;
+  padding: 6px 16px calc(14px + env(safe-area-inset-bottom, 0px));
+  background: linear-gradient(to top, var(--cream) 78%, rgba(247, 243, 236, 0));
+  border-top: 1px solid var(--parchment);
+  z-index: 200;
+  transform: translateX(-50%) translateY(110%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+  overflow: visible;
+}
+.welcome-sticky-cta.visible {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.sticky-cta-hint {
+  text-align: center;
+  font-size: 12px;
+  color: var(--green);
+  margin-bottom: 10px;
+  letter-spacing: 0.04em;
+}
+.sticky-cta-wrap {
+  position: relative;
+  padding-top: 14px;
+  overflow: visible;
+}
+.sticky-cta-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 14px;
+  border: 2px solid rgba(181, 101, 29, 0.35);
+  animation: ctaRing 1.8s ease-out infinite;
+  pointer-events: none;
+}
+@keyframes ctaRing {
+  0% { transform: scale(1); opacity: 0.75; }
+  100% { transform: scale(1.06); opacity: 0; }
+}
+
+/* ── Question ── */
+.q-num {
+  font-size: 12px;
+  color: var(--ochre);
+  letter-spacing: 0.12em;
+  margin-bottom: 8px;
+}
+.q-text {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 20px;
+  color: var(--ink);
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.option {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: var(--white);
+  border: 1.5px solid var(--parchment);
+  border-radius: 10px;
+  padding: 16px 18px;
+  font-size: 15px;
+  color: var(--ink-mid);
+  cursor: pointer;
+  transition: all 0.2s;
+  line-height: 1.5;
+}
+.option:hover, .option:active {
+  border-color: var(--green-lt);
+  background: var(--green-bg);
+}
+.option.selected {
+  border-color: var(--green);
+  background: var(--green-bg);
+  color: var(--green);
+  font-weight: 500;
+}
+.option.option-neutral {
+  border-style: dashed;
+  border-color: var(--ink-lt);
+  background: var(--cream);
+  color: var(--ink-lt);
+  font-size: 14px;
+}
+.option.option-neutral:hover,
+.option.option-neutral:active {
+  border-color: var(--ink-lt);
+  background: var(--parchment);
+}
+.option.option-neutral.selected {
+  border-color: var(--ink-lt);
+  background: var(--parchment);
+  color: var(--ink-mid);
+  font-weight: 500;
+}
+.options.locked .option {
+  pointer-events: none;
+  opacity: 0.85;
+}
+.quiz-hint {
+  font-size: 12px;
+  color: var(--ink-lt);
+  text-align: center;
+  margin: 0 0 4px;
+}
+.quiz-footer {
+  padding-top: 8px;
+}
+.btn-back-link {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--ink-lt);
+  font-size: 13px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* ── Lead Form ── */
+.form-intro {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.form-intro .preview-badge {
+  display: inline-block;
+  background: var(--green);
+  color: #fff;
+  font-size: 12px;
+  padding: 6px 16px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+}
+.form-intro h2 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 22px;
+  color: var(--green);
+  margin-bottom: 8px;
+}
+.form-intro p {
+  font-size: 13px;
+  color: var(--ink-lt);
+}
+.form-group {
+  margin-bottom: 16px;
+}
+.form-group label {
+  display: block;
+  font-size: 13px;
+  color: var(--ink-mid);
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+.form-group label .req { color: var(--ochre); }
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1.5px solid var(--parchment);
+  border-radius: 8px;
+  font-size: 16px;
+  background: var(--white);
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+}
+.form-group input:focus, .form-group select:focus {
+  border-color: var(--green);
+}
+.form-group .hint {
+  font-size: 11px;
+  color: var(--ink-lt);
+  margin-top: 4px;
+}
+.privacy-note {
+  font-size: 11px;
+  color: var(--ink-lt);
+  text-align: center;
+  margin-top: 12px;
+  line-height: 1.6;
+}
+
+/* ── Result ── */
+.result-header {
+  text-align: center;
+  padding-bottom: 20px;
+}
+.result-header .score-ring {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: var(--green);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  font-family: 'Noto Serif SC', serif;
+}
+.result-header .score-ring .type { font-size: 13px; line-height: 1.3; text-align: center; }
+.result-header h2 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 24px;
+  color: var(--green);
+  margin-bottom: 6px;
+}
+.result-header .pathology {
+  font-size: 13px;
+  color: var(--ochre);
+  letter-spacing: 0.05em;
+}
+.result-header.incomplete h2 {
+  color: #b53030;
+  font-size: 20px;
+  line-height: 1.5;
+}
+.result-header.incomplete p {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-top: 12px;
+}
+.incomplete-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 20px 0 8px;
+}
+.urgency-banner {
+  background: linear-gradient(135deg, #8b1a1a, #b53030);
+  color: #fff;
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 13px;
+  line-height: 1.7;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.result-card {
+  background: var(--white);
+  border: 1px solid var(--parchment);
+  border-radius: 10px;
+  padding: 18px;
+  margin-bottom: 14px;
+}
+.result-card h3 {
+  font-size: 14px;
+  color: var(--green);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.result-card p, .result-card li {
+  font-size: 13.5px;
+  color: var(--ink-mid);
+  line-height: 1.85;
+}
+.result-card ul {
+  padding-left: 18px;
+  margin: 0;
+}
+.syndrome-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+.tag {
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: var(--green-bg);
+  color: var(--green);
+}
+.tag.secondary {
+  background: #fff8f0;
+  color: var(--ochre);
+}
+.cta-box {
+  background: var(--green);
+  color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  margin-top: 8px;
+}
+.cta-box p {
+  font-size: 13px;
+  opacity: 0.85;
+  margin-bottom: 12px;
+  line-height: 1.7;
+}
+.cta-box .phone {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 22px;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+.cta-box .wechat {
+  font-size: 13px;
+  opacity: 0.75;
+}
+.cta-box .wechat-qr {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 8px;
+  padding: 6px;
+  margin: 0 auto 12px;
+  display: block;
+}
+.cta-box .phone a {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* ── Footer actions ── */
+.footer-actions {
+  padding: 16px 20px 28px;
+  background: var(--cream);
+  border-top: 1px solid var(--parchment);
+}
+.btn {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.05em;
+}
+.btn-primary {
+  background: var(--green);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--green-lt); }
+.btn-primary:disabled {
+  background: #a8b8a6;
+  cursor: not-allowed;
+}
+.btn-secondary {
+  background: transparent;
+  color: var(--ink-lt);
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 10px;
+}
+.btn-outline {
+  background: var(--white);
+  color: var(--green);
+  border: 1.5px solid var(--green);
+  margin-top: 10px;
+}
+
+.disclaimer {
+  font-size: 10px;
+  color: var(--ink-lt);
+  text-align: center;
+  padding: 0 20px 20px;
+  line-height: 1.6;
+}
+
+.toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(26,26,24,0.88);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  opacity: 0;
+  transition: all 0.3s;
+  z-index: 999;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+@media (min-width: 481px) {
+  body { background: #e8e4dc; }
+  .app {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    min-height: calc(100dvh - 40px);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    background: var(--cream);
+  }
+  .welcome-sticky-cta {
+    bottom: 20px;
+    border-radius: 0 0 16px 16px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="app" id="app">
+  <div class="top-bar">
+    <div class="brand">三艾堂医疗级调养中心</div>
+    <h1 id="screenTitle">体质免费自测</h1>
+    <div class="progress-wrap" id="progressWrap" style="display:none">
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <span class="progress-text" id="progressText">1 / 10</span>
+    </div>
+  </div>
+
+  <!-- 欢迎页 -->
+  <div class="screen active" id="screenWelcome">
+    <div class="content">
+      <div class="welcome-hero">
+        <div class="hero-tag">🔥 九型体质限时免费</div>
+        <h2>你属于哪一种<br><span style="color:var(--ochre)">中医体质</span>？</h2>
+        <p class="hero-sub"><em>90秒免费自测</em>，结合五运六气生成调养方案</p>
+      </div>
+      <div class="social-proof">
+        <span class="dot"></span>
+        <span id="liveCount">九型体质 + 五运六气报告已开放</span>
+      </div>
+      <div class="countdown-box">
+        <div class="days-left">九型体质辨识 · 出生年五运六气 · 个体化调养</div>
+        <div class="label">三艾堂体质调养 · 药食同源四法一体</div>
+        <div class="dates">
+          <div class="date-item"><div class="phase">体质</div><div class="day">九型主次判定</div></div>
+          <div class="date-item"><div class="phase">运气</div><div class="day">五运六气推演</div></div>
+          <div class="date-item"><div class="phase">食疗</div><div class="day">岁谷间谷建议</div></div>
+        </div>
+      </div>
+      <ul class="pain-list">
+        <li><span class="emoji">💨</span><span>总觉得累，<strong>气短懒言</strong>？</span></li>
+        <li><span class="emoji">🥶</span><span>手脚怕冷，<strong>喜欢热饮热食</strong>？</span></li>
+        <li><span class="emoji">🔥</span><span>口干心烦，<strong>手足心热</strong>？</span></li>
+        <li><span class="emoji">💧</span><span>痰多口黏，<strong>身重困倦</strong>？</span></li>
+        <li><span class="emoji">🌿</span><span>情绪郁闷，<strong>胸胁胀满</strong>？</span></li>
+      </ul>
+      <div class="gift-banner">
+        测完即领 <strong>专属调理方案</strong><br>
+        三艾堂医师团队 · 体质辨识 · 五运六气 · 中药+药油+艾灸+食疗四法一体
+      </div>
+    </div>
+  </div>
+
+  <!-- 答题页 -->
+  <div class="screen" id="screenQuiz">
+    <div class="content">
+      <div class="q-num" id="qNum"></div>
+      <div class="q-text" id="qText"></div>
+      <div class="options" id="qOptions"></div>
+    </div>
+    <div class="footer-actions quiz-footer">
+      <p class="quiz-hint">点选答案自动下一题 · 都不太符合请选最后一项</p>
+      <button type="button" class="btn-back-link" id="btnPrev" onclick="prevQuestion()" style="display:none">← 上一题</button>
+    </div>
+  </div>
+
+  <!-- 留资页 -->
+  <div class="screen" id="screenLead">
+    <div class="content">
+      <div class="form-intro">
+        <div class="preview-badge" id="previewBadge">🎯 您的分型已初步判定</div>
+        <h2>报告已生成，立即解锁</h2>
+        <p>填写信息即可查看<strong>完整调理方案</strong><br>医师团队还将为您一对一解读 + 预约到馆面诊</p>
+      </div>
+      <div class="lead-teaser" id="leadTeaser">
+        <div class="teaser-title">📋 您的专属报告包含：</div>
+        <div class="teaser-item">✅ 主体质深度解读 + 典型表现对照</div>
+        <div class="teaser-item">✅ 体质偏颇程度评估</div>
+        <div class="teaser-item">✅ 出生年五运六气推演</div>
+        <div class="teaser-item">✅ 食疗、穴位、起居注意事项</div>
+        <div class="teaser-item">✅ 医师团队 24 小时内电话解读</div>
+        <div class="lock-hint">🔒 填写下方信息即可解锁完整报告</div>
+      </div>
+      <div class="benefit-strip">
+        <div class="benefit-chip"><span class="icon">🎁</span>完全免费</div>
+        <div class="benefit-chip"><span class="icon">👨‍⚕️</span>医师解读</div>
+        <div class="benefit-chip"><span class="icon">📅</span>优先预约</div>
+      </div>
+      <form id="leadForm" novalidate onsubmit="handleLeadFormSubmit(event)">
+        <div class="form-group">
+          <label>您的称呼 <span class="req">*</span></label>
+          <input type="text" name="name" placeholder="如：王女士 / 李先生" maxlength="20">
+        </div>
+        <div class="form-group">
+          <label>手机号 <span class="req">*</span></label>
+          <input type="tel" name="phone" placeholder="接收报告解读，不会骚扰" maxlength="11" inputmode="numeric">
+        </div>
+        <div class="form-group">
+          <label>出生年份 <span class="req">*</span></label>
+          <select name="birthYear" id="birthYear">
+            <option value="">请选择出生年份</option>
+          </select>
+          <div class="hint">请填写真实的出生年份，用于五运六气先天体质推算</div>
+        </div>
+        <div class="form-group">
+          <label>性别 <span class="req">*</span></label>
+          <div class="gender-group" id="genderGroup">
+            <label class="gender-btn" data-value="女">
+              <input type="radio" name="gender" value="女"> 👩 女性
+            </label>
+            <label class="gender-btn" data-value="男">
+              <input type="radio" name="gender" value="男"> 👨 男性
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>方便联系时段</label>
+          <select name="contactTime">
+            <option value="">请选择（可选）</option>
+            <option value="上午9-12点">上午 9—12 点</option>
+            <option value="中午12-14点">中午 12—14 点</option>
+            <option value="下午14-18点">下午 14—18 点</option>
+          </select>
+        </div>
+        <p class="privacy-note">🔒 信息严格保密，仅用于体质调养咨询</p>
+      </form>
+    </div>
+    <div class="footer-actions">
+      <button type="button" class="btn btn-primary btn-cta" id="btnSubmit" onclick="handleLeadSubmit()">立即解锁我的专属报告 →</button>
+    </div>
+  </div>
+
+  <!-- 结果页 -->
+  <div class="screen" id="screenResult">
+    <div class="content" id="resultContent"></div>
+    <div class="footer-actions">
+      <button class="btn btn-primary btn-cta" onclick="shareResult()">发给朋友也测一测 →</button>
+      <button class="btn btn-outline" onclick="restartQuiz()">重新测试</button>
+    </div>
+  </div>
+
+  <div class="welcome-sticky-cta visible" id="welcomeStickyCta">
+    <p class="sticky-cta-hint">测完即领九型体质 + 五运六气报告 · 不花一分钱</p>
+    <div class="sticky-cta-wrap">
+      <span class="btn-cta-badge">限时免费</span>
+      <button type="button" class="btn btn-primary btn-cta btn-cta-pulse btn-cta-hero" onclick="startQuiz()">
+        立即免费自测，领取专属方案 →
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+
+const CONFIG = {
+  FORM_SLUG: 'constitution-quiz',
+  API_URL: '/.netlify/functions/submit-lead',
+  CONTACT_PHONES: ['85500133', '18607312010'],
+  WECHAT_QR_IMAGE: 'wechat-qr.png',
+  CLINIC_NAME: '三艾堂',
+  OFFER_PRICE: '99 元',
+  OFFER_ORIGIN: '350 元',
+  OFFER_TEXT: '体质调养评估 1 次',
+};
+
+const TESTIMONIALS = {
+  pinghe: { text: '自测后才知道自己整体偏平和，医师建议保持作息和饮食节律，不盲目进补。', author: '— 陈女士，36岁，平和质' },
+  qixu: { text: '以前总觉得累、容易感冒。按气虚方向调了一段时间，精神和耐力都比之前稳。', author: '— 王先生，42岁，气虚质' },
+  yangxu: { text: '常年手脚冷，吃凉就不舒服。温阳健脾后，怕冷和腹部不适少了。', author: '— 刘女士，45岁，阳虚质' },
+  yinxu: { text: '总口干、手心热，晚上也烦。滋阴润燥调理后，整个人没那么燥了。', author: '— 周女士，51岁，阴虚质' },
+  tanshi: { text: '饭后困、身上沉，舌苔也厚。健脾化湿后，人轻松了很多。', author: '— 李先生，39岁，痰湿质' },
+  shire: { text: '口苦口黏、脸上容易出油。清热利湿后，口气和皮肤状态都改善了。', author: '— 赵先生，33岁，湿热质' },
+  xueyu: { text: '脸色暗、肩颈紧，痛经也明显。活血调理后，经前不适轻了不少。', author: '— 张女士，32岁，血瘀质' },
+  qiyu: { text: '压力一大胸口就闷，睡也不踏实。疏肝解郁后，情绪和睡眠都更稳定。', author: '— 林女士，37岁，气郁质' },
+  tebing: { text: '换季鼻炎和皮肤敏感反复。按特禀体质调卫气后，发作频率比以前低。', author: '— 黄先生，28岁，特禀质' },
+};
+
+const SYNDROMES = {
+  pinghe: {
+    id: 'pinghe',
+    name: '平和质',
+    short: '平和',
+    pathology: '阴阳气血调和，脏腑功能相对稳定',
+    icon: '🌿',
+    summary: '体态适中、面色润泽、精力较好，睡眠和二便基本正常，属于相对健康的基础体质。',
+    symptoms: ['精力较充沛，睡眠安和', '二便基本正常，面色润泽', '较少患病，适应季节变化能力较好'],
+    method: '方向：平补阴阳，守住节律。食疗：山药粥、莲子百合粥；饮食多样化，不偏食。运动以长期坚持为主。',
+    cycle: '长期维护',
+    urgency: '平和质重在保持，不宜盲目进补或过度清热。',
+    hook: '精力、睡眠、二便都较稳定，是平和质的重要表现。',
+    contraindication: '忌长期偏食、熬夜和过度进补；结果仅供参考，不能替代医师面诊。',
+    daily: '起居有常，适度运动，饮食不过偏。',
+  },
+  qixu: {
+    id: 'qixu',
+    name: '气虚质',
+    short: '气虚',
+    pathology: '脾肺气虚，推动固摄不足，卫外不固',
+    icon: '💨',
+    summary: '常见气短懒言、容易疲劳、易出汗和易感冒，声音偏低，运动后恢复慢。',
+    symptoms: ['语声低弱，气短懒言', '容易疲劳、自汗、易感冒', '舌边易有齿痕，精神耐力不足'],
+    method: '方向：益气健脾，补中益气。穴位：足三里、气海、关元、百会。食疗：黄芪炖鸡、山药粥、党参红枣茶。',
+    cycle: '4–8 周',
+    urgency: '气虚拖久会让疲劳、易感冒和脾胃运化问题反复出现。',
+    hook: '总觉得累、气短懒言、容易出汗，是气虚质的典型信号。',
+    contraindication: '少吃生萝卜、空心菜等破气之品；结果仅供参考。',
+    daily: '少熬夜，循序渐进运动，避免过度消耗。',
+  },
+  yangxu: {
+    id: 'yangxu',
+    name: '阳虚质',
+    short: '阳虚',
+    pathology: '阳气不足，温煦失职，脾肾偏虚',
+    icon: '🥶',
+    summary: '畏寒怕冷、手足不温，喜欢热饮热食，精神偏弱，常见泄泻或关节冷痛倾向。',
+    symptoms: ['畏寒怕冷，手足不温', '喜热饮食，精神不振', '舌淡胖嫩，易泄泻或水肿'],
+    method: '方向：温补脾肾，益火之源。穴位：命门、肾俞、关元、神阙。食疗：羊肉当归汤、核桃桂圆茶、生姜红糖水。',
+    cycle: '1–3 个月',
+    urgency: '阳虚体质遇寒易加重，需系统温养，不宜长期贪凉。',
+    hook: '怕冷、手脚不温、喜欢热饮，是阳虚质的典型表现。',
+    contraindication: '忌生冷瓜果、冰镇饮料、绿茶、螃蟹等寒凉之品。',
+    daily: '腹腰保暖，早睡，运动以温和出汗为度。',
+  },
+  yinxu: {
+    id: 'yinxu',
+    name: '阴虚质',
+    short: '阴虚',
+    pathology: '阴液不足，虚热内生，津亏失润',
+    icon: '🔥',
+    summary: '手足心热、口燥咽干、喜冷饮、大便偏干，常伴急躁和睡眠不安。',
+    symptoms: ['手足心热，口燥咽干', '喜冷饮，大便干燥', '舌红少津，性情较急'],
+    method: '方向：滋阴降火，养阴润燥。穴位：太溪、涌泉、三阴交、肾俞。食疗：银耳百合羹、麦冬玉竹茶、枸杞菊花茶。',
+    cycle: '4–8 周',
+    urgency: '阴虚遇熬夜、辛辣和温燥食物容易加重虚热。',
+    hook: '口干、手足心热、大便干，是阴虚质的重要提示。',
+    contraindication: '忌辣椒、花椒、姜、羊肉、火锅和长期熬夜。',
+    daily: '少熬夜，少辛辣，晚间减少过度兴奋。',
+  },
+  tanshi: {
+    id: 'tanshi',
+    name: '痰湿质',
+    short: '痰湿',
+    pathology: '脾失健运，痰湿内停，清阳不升',
+    icon: '💧',
+    summary: '体形偏胖或腹部肥满，面部油脂较多，痰多口黏，舌苔厚腻，饭后困重。',
+    symptoms: ['腹部肥满，身体沉重', '面部油脂多，痰多口黏', '舌苔厚腻，容易困倦'],
+    method: '方向：健脾利湿，化痰泄浊。穴位：丰隆、阴陵泉、中脘、脾俞。食疗：茯苓赤小豆粥、陈皮荷叶茶、冬瓜薏米汤。',
+    cycle: '6–12 周',
+    urgency: '痰湿久留易与代谢、体重和血脂问题互相影响。',
+    hook: '身重、口黏、痰多、腹部肥满，是痰湿质的核心线索。',
+    contraindication: '忌甜腻厚味、奶茶、奶油、酒类和肥甘厚腻。',
+    daily: '少甜少油，饭后慢走，保持规律出汗。',
+  },
+  shire: {
+    id: 'shire',
+    name: '湿热质',
+    short: '湿热',
+    pathology: '湿热内蕴，气机不畅，清浊不分',
+    icon: '🌡️',
+    summary: '面垢油光、易生痤疮、口苦口干、身重困倦，大便黏滞或燥结。',
+    symptoms: ['面部油光，易生痤疮', '口苦口干，身重困倦', '大便黏滞或燥结，舌苔黄腻'],
+    method: '方向：清热利湿，疏肝利胆。穴位：曲池、合谷、阴陵泉、大椎。食疗：绿豆薏米粥、凉拌苦瓜、玉米须茶。',
+    cycle: '4–8 周',
+    urgency: '湿热遇辛辣、酒精和熬夜易明显加重。',
+    hook: '口苦口黏、脸油痘多、大便不爽，是湿热质常见表现。',
+    contraindication: '忌辛辣、煎炸烧烤、酒精、甜食、芒果、榴莲。',
+    daily: '饮食清淡，减少酒肉辛辣，规律排便。',
+  },
+  xueyu: {
+    id: 'xueyu',
+    name: '血瘀质',
+    short: '血瘀',
+    pathology: '血行不畅，瘀阻脉络，失于濡养',
+    icon: '🩸',
+    summary: '肤色晦暗、口唇暗淡、色素沉着，疼痛固定，女性可见痛经倾向。',
+    symptoms: ['肤色晦暗，口唇偏暗', '色素沉着或舌下脉络明显', '容易固定痛、刺痛或痛经'],
+    method: '方向：活血化瘀，行气止痛。穴位：血海、膈俞、三阴交、太冲。食疗：山楂红糖饮、黑木耳炒洋葱、玫瑰花茶。',
+    cycle: '6–12 周',
+    urgency: '血瘀质需重视循环与疼痛信号，长期不调易反复。',
+    hook: '脸色暗、唇色暗、固定痛，是血瘀质的重要提示。',
+    contraindication: '忌寒凉收涩、冷饮冰品、肥腻厚味和胀气食物。',
+    daily: '保持运动，少久坐，注意保暖。',
+  },
+  qiyu: {
+    id: 'qiyu',
+    name: '气郁质',
+    short: '气郁',
+    pathology: '肝气郁滞，气机不畅，情志失舒',
+    icon: '🌿',
+    summary: '神情抑郁、烦闷不乐、胸胁胀满、善太息，睡眠较差，情绪敏感。',
+    symptoms: ['烦闷不乐，情感脆弱', '胸胁胀满，善太息', '睡眠较差，敏感多疑'],
+    method: '方向：疏肝解郁，调畅气机。穴位：太冲、膻中、内关、肝俞、合谷。食疗：玫瑰花茶、佛手柑粥、陈皮山楂茶。',
+    cycle: '4–8 周',
+    urgency: '气郁质常与睡眠、乳腺、甲状腺和消化问题互相牵动。',
+    hook: '胸闷爱叹气、情绪郁结、睡眠变差，是气郁质的典型线索。',
+    contraindication: '少浓茶、咖啡和辛辣刺激食物，避免加重肝火。',
+    daily: '规律运动，主动表达情绪，减少长期压抑。',
+  },
+  tebing: {
+    id: 'tebing',
+    name: '特禀质',
+    short: '特禀',
+    pathology: '先天禀赋不足，卫外不固，易受外邪触发',
+    icon: '🛡️',
+    summary: '以过敏体质为常见表现，容易鼻炎、哮喘、荨麻疹、湿疹或对特定食物环境敏感。',
+    symptoms: ['过敏性鼻炎、哮喘、湿疹或荨麻疹倾向', '换季或接触过敏原后易发作', '先天禀赋偏弱或有家族过敏史'],
+    method: '方向：益气固表，扶正祛邪。穴位：足三里、关元及过敏部位局部取穴。食疗：红枣山药粥、黄芪粥；明确过敏原需规避。',
+    cycle: '长期调护',
+    urgency: '特禀质关键是识别诱因、扶正固表，减少反复触发。',
+    hook: '换季鼻炎、皮肤敏感或食物过敏反复，是特禀质的重要提示。',
+    contraindication: '忌明确过敏原；虾蟹等发物需按个人情况调整。',
+    daily: '记录过敏诱因，换季提前防护，保持睡眠稳定。',
+  },
+};
+
+const QUESTIONS = [
+  {
+    text: '您平时整体状态更接近哪一种？',
+    options: [
+      { label: '精力较好，睡眠和二便基本正常', scores: { pinghe: 4 } },
+      { label: '总觉得累，气短，说话声音偏弱', scores: { qixu: 4 }, severity: 1 },
+      { label: '怕冷，手脚不温，喜欢热饮热食', scores: { yangxu: 4 }, severity: 1 },
+      { label: '口干咽干，手足心热，大便偏干', scores: { yinxu: 4 }, severity: 1 },
+      { label: '身体沉重，口黏痰多，饭后困', scores: { tanshi: 4 }, severity: 1 },
+    ],
+  },
+  {
+    text: '关于出汗、感冒和耐力，哪句更符合？',
+    options: [
+      { label: '容易疲劳，稍动就出汗', scores: { qixu: 4 }, severity: 1 },
+      { label: '换季容易感冒，恢复慢', scores: { qixu: 3, tebing: 1 }, severity: 1 },
+      { label: '耐力不错，很少感冒', scores: { pinghe: 3 } },
+      { label: '主要不是累，而是情绪影响状态', scores: { qiyu: 3 } },
+    ],
+  },
+  {
+    text: '冷热感受更接近？',
+    options: [
+      { label: '明显怕冷，腹部或腰膝也怕冷', scores: { yangxu: 4 }, severity: 1 },
+      { label: '手足心热，晚上更明显', scores: { yinxu: 4 }, severity: 1 },
+      { label: '冷热适应都还可以', scores: { pinghe: 2 } },
+      { label: '热时口苦口黏、容易烦躁', scores: { shire: 3 } },
+    ],
+  },
+  {
+    text: '皮肤、面部和口中感觉更接近？',
+    options: [
+      { label: '面部油光，容易长痘，口苦口干', scores: { shire: 4 }, severity: 1 },
+      { label: '皮肤油脂多，痰多口黏，舌苔厚', scores: { tanshi: 4 }, severity: 1 },
+      { label: '脸色偏暗，唇色偏暗或色斑明显', scores: { xueyu: 4 }, severity: 1 },
+      { label: '面色润泽，口中无明显不适', scores: { pinghe: 3 } },
+    ],
+  },
+  {
+    text: '大便与消化情况更接近？',
+    options: [
+      { label: '二便正常，胃口稳定', scores: { pinghe: 3 } },
+      { label: '大便干燥，口燥咽干', scores: { yinxu: 3 } },
+      { label: '大便黏滞不爽或燥结，口苦', scores: { shire: 3 } },
+      { label: '大便不成形，吃凉容易不舒服', scores: { yangxu: 2, qixu: 1 } },
+      { label: '饭后困重，腹部肥满', scores: { tanshi: 3 } },
+    ],
+  },
+  {
+    text: '情绪和胸胁感受更接近？',
+    options: [
+      { label: '烦闷不乐，胸胁胀满，爱叹气', scores: { qiyu: 4 }, severity: 1 },
+      { label: '容易烦躁急躁，口苦明显', scores: { shire: 2, yinxu: 1 } },
+      { label: '容易烦躁健忘，疼痛或不适固定', scores: { xueyu: 3 } },
+      { label: '性格随和开朗，情绪较稳', scores: { pinghe: 3 } },
+    ],
+  },
+  {
+    text: '疼痛、循环和女性经期相关表现？',
+    options: [
+      { label: '口唇暗淡，肤色晦暗，色素沉着', scores: { xueyu: 4 }, severity: 1 },
+      { label: '容易固定刺痛、痛经或经色偏暗', scores: { xueyu: 4 }, severity: 1 },
+      { label: '这类情况不明显', scores: { pinghe: 1 } },
+      { label: '主要是乏力或怕冷，不是瘀痛', scores: { qixu: 1, yangxu: 1 } },
+    ],
+  },
+  {
+    text: '过敏和外界刺激反应？',
+    options: [
+      { label: '有鼻炎、哮喘、湿疹或荨麻疹倾向', scores: { tebing: 4 }, severity: 1 },
+      { label: '换季、尘螨、花粉或特定食物容易触发不适', scores: { tebing: 4 }, severity: 1 },
+      { label: '皮肤或呼吸道较少过敏', scores: { pinghe: 2 } },
+      { label: '偶尔敏感，但不反复', scores: { tebing: 1 } },
+    ],
+  },
+  {
+    text: '您的生活习惯更接近？',
+    options: [
+      { label: '经常熬夜，口干烦热更明显', scores: { yinxu: 3, shire: 1 }, severity: 1 },
+      { label: '爱甜腻奶茶或酒肉厚味', scores: { tanshi: 2, shire: 3 }, severity: 1 },
+      { label: '长期高压，情绪憋着不说', scores: { qiyu: 4 }, severity: 1 },
+      { label: '久坐少动，身体沉重', scores: { tanshi: 2, xueyu: 2 } },
+      { label: '作息规律，饮食清淡，运动适度', scores: { pinghe: 3 } },
+    ],
+  },
+  {
+    text: '如果只能先改善一个问题，您选？',
+    options: [
+      { label: '容易疲劳、气短、易感冒', scores: { qixu: 4 } },
+      { label: '怕冷、手脚不温、吃凉不适', scores: { yangxu: 4 } },
+      { label: '口干、手足心热、大便干', scores: { yinxu: 4 } },
+      { label: '痰多口黏、身重腹满', scores: { tanshi: 4 } },
+      { label: '口苦长痘、大便黏滞', scores: { shire: 4 } },
+      { label: '肤色暗、固定痛、痛经', scores: { xueyu: 4 } },
+      { label: '胸闷爱叹气、情绪郁结', scores: { qiyu: 4 } },
+      { label: '过敏反复、换季敏感', scores: { tebing: 4 } },
+    ],
+  },
+];
+
+const WYLQ = {
+  TIANGAN: ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'],
+  DIZHI: ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'],
+  WUYUN: {
+    甲: { label: '土运太过', wuxing: '土', zangfu: '脾胃', tendency: '湿气偏盛，易见腹胀、泄泻、体重', strategy: '燥湿健脾', formula: '苓术汤', food: '健脾燥湿粥：小米、薏米、陈皮' },
+    乙: { label: '金运不及', wuxing: '金', zangfu: '肺大肠', tendency: '肺气偏弱，易气短、咳嗽、易感冒', strategy: '补肺益气', formula: '紫菀汤', food: '补肺益气粥：大米、百合、杏仁' },
+    丙: { label: '水运太过', wuxing: '水', zangfu: '肾膀胱', tendency: '寒湿偏盛，易畏寒、水肿、心悸', strategy: '温阳利水', formula: '川连茯苓汤', food: '清热利湿汤：黑豆、薏米、冬瓜' },
+    丁: { label: '木运不及', wuxing: '木', zangfu: '肝胆', tendency: '肝血不足，易目涩、筋挛、抑郁', strategy: '补肝养血', formula: '苁蓉牛膝汤', food: '补肝养血汤：绿豆、黑芝麻、枸杞' },
+    戊: { label: '火运太过', wuxing: '火', zangfu: '心小肠', tendency: '火热偏盛，易心烦、口渴、疮疡', strategy: '清心泻火', formula: '麦门冬汤', food: '清心泻火汤：红豆、莲子、竹叶' },
+    己: { label: '土运不及', wuxing: '土', zangfu: '脾胃', tendency: '脾胃偏弱，易食少、乏力、肌肉无力', strategy: '健脾和胃', formula: '白术厚朴汤', food: '健脾和胃粥：小米、山药、茯苓' },
+    庚: { label: '金运太过', wuxing: '金', zangfu: '肺大肠', tendency: '燥气偏盛，易咳嗽、咽干、筋急', strategy: '柔肝润燥', formula: '牛膝木瓜汤', food: '柔肝润燥粥：大米、百合、银耳' },
+    辛: { label: '水运不及', wuxing: '水', zangfu: '肾膀胱', tendency: '肾气不足，易腰酸、耳鸣、健忘', strategy: '温补肾阳', formula: '五味子汤', food: '温阳补肾粥：黑豆、核桃、肉桂' },
+    壬: { label: '木运太过', wuxing: '木', zangfu: '肝胆', tendency: '风气偏盛，易头痛、眩晕、肝脾不和', strategy: '清肺泻肝', formula: '枇杷叶散', food: '清肺泻肝汤：绿豆、菊花、桑叶' },
+    癸: { label: '火运不及', wuxing: '火', zangfu: '心小肠', tendency: '心阳偏弱，易心悸、畏寒、萎靡', strategy: '补心益气', formula: '黄芪茯神汤', food: '补心益气粥：红豆、红枣、龙眼' },
+  },
+  LIUQI: [
+    { zhi: ['子', '午'], sitian: '少阴君火', zaiquan: '阳明燥金', formula: '正阳汤', food: '清心降火方：红豆、莲子、竹叶', tendency: '心热与肺燥并见，注意清心润燥' },
+    { zhi: ['丑', '未'], sitian: '太阴湿土', zaiquan: '太阳寒水', formula: '备化汤', food: '健脾祛湿方：小米、薏米、陈皮', tendency: '湿土寒水偏重，注意温阳燥湿' },
+    { zhi: ['寅', '申'], sitian: '少阳相火', zaiquan: '厥阴风木', formula: '升明汤', food: '清热泻火方：绿豆、黑豆、菊花', tendency: '相火与风木偏盛，注意清肝泻火' },
+    { zhi: ['卯', '酉'], sitian: '阳明燥金', zaiquan: '少阴君火', formula: '审平汤', food: '润肺生津方：大米、百合、银耳', tendency: '燥金与君火并见，注意清肺泻火、润燥' },
+    { zhi: ['辰', '戌'], sitian: '太阳寒水', zaiquan: '太阴湿土', formula: '静顺汤', food: '温阳补肾方：黑豆、黑米、核桃', tendency: '寒水湿土偏重，注意温阳利水、健脾' },
+    { zhi: ['巳', '亥'], sitian: '厥阴风木', zaiquan: '少阳相火', formula: '敷和汤', food: '风木调肝方：绿豆、黑豆、玫瑰', tendency: '风木相火偏盛，注意疏肝和胃、清热' },
+  ],
+  ADJUST: {
+    pinghe: '平和质以守中为主，岁谷间谷可少量轮换，不宜偏补偏清。',
+    qixu: '气虚质可在食疗中增加小米、大米、山药，少用寒凉。',
+    yangxu: '阳虚质注意温阳，黑豆、核桃可酌情增加，避免过度清热寒凉。',
+    yinxu: '阴虚质宜养阴润燥，可增加黑米、银耳、百合，少用温燥。',
+    tanshi: '痰湿质宜健脾化湿，可增加薏米、红豆，少甜腻滋补。',
+    shire: '湿热质宜清热利湿，可增加绿豆、薏米，忌温补酒辣。',
+    xueyu: '血瘀质宜活血通络，可配合黑豆、山楂、玫瑰，少寒凉收涩。',
+    qiyu: '气郁质宜疏肝理气，可配合青豆、玫瑰、陈皮，少收敛。',
+    tebing: '特禀质以简化和避敏为先，优先选择明确不过敏的小米、大米、山药。',
+  },
+  getGanzhi(year) {
+    const offset = (Number(year) - 1984) % 60;
+    const normalized = (offset + 60) % 60;
+    return {
+      gan: this.TIANGAN[normalized % 10],
+      zhi: this.DIZHI[normalized % 12],
+    };
+  },
+  generate(year, constitutionId) {
+    const { gan, zhi } = this.getGanzhi(year);
+    const wuyun = this.WUYUN[gan];
+    const liuqi = this.LIUQI.find(item => item.zhi.includes(zhi));
+    return {
+      year,
+      ganzhi: gan + zhi,
+      wuyunLabel: wuyun.label,
+      wuyun,
+      sitian: liuqi.sitian,
+      zaiquan: liuqi.zaiquan,
+      liuqiFormula: liuqi.formula,
+      liuqiFood: liuqi.food,
+      liuqiTendency: liuqi.tendency,
+      constitutionAdjust: this.ADJUST[constitutionId] || this.ADJUST.pinghe,
+      summary: `${year} 年为 ${gan}${zhi} 年，${wuyun.label}，${liuqi.sitian}司天、${liuqi.zaiquan}在泉。`,
+    };
+  },
+};
+
+const SKIP_OPTION = { label: '以上都不太符合我', scores: {}, neutral: true };
+const INCOMPLETE_MSG = '您填的信息不完整，系统无法正确判断';
+
+function isSkipAnswer(qIndex, answerIdx) {
+  const opt = getQuestionOptions(qIndex)[answerIdx];
+  return !!(opt?.neutral && opt.label === SKIP_OPTION.label);
+}
+
+function isAllSkipAnswers() {
+  return QUESTIONS.every((_, qIndex) => {
+    const answerIdx = answers[qIndex];
+    return answerIdx !== undefined && isSkipAnswer(qIndex, answerIdx);
+  });
+}
+
+function getQuestionOptions(qIndex) {
+  const opts = QUESTIONS[qIndex].options.map(o => ({ ...o }));
+  if (!opts.some(o => o.neutral && o.label === SKIP_OPTION.label)) {
+    opts.push({ ...SKIP_OPTION });
+  }
+  return opts;
+}
+
+let currentQ = 0;
+let answers = [];
+let scores = {};
+let severityScore = 0;
+let leadData = {};
+let quizIncomplete = false;
+let optionLock = false;
+const AUTO_ADVANCE_MS = 380;
+const scoredQuestions = new Set();
+
+function initScores() {
+  scores = {};
+  Object.keys(SYNDROMES).forEach(k => { scores[k] = 0; });
+  severityScore = 0;
+}
+
+function getSeverityLevel() {
+  if (severityScore >= 8) return { level: '重度', label: '体质偏颇较明显', tip: '建议尽快到馆系统辨证调理，先抓主要体质，再兼顾次要倾向。' };
+  if (severityScore >= 5) return { level: '中度', label: '体质偏颇中等', tip: '建议到馆面诊，结合体质、症状和五运六气综合调养。' };
+  if (severityScore >= 2) return { level: '轻度', label: '体质轻度偏颇', tip: '可先调整饮食起居，并配合食疗与专业评估。' };
+  return { level: '平稳', label: '整体相对平稳', tip: '建议保持节律，并根据出生年五运六气做日常调养。' };
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const titles = {
+    screenWelcome: '体质免费自测',
+    screenQuiz: '正在分析您的体质…',
+    screenLead: '解锁体质报告',
+    screenResult: quizIncomplete ? '⚠️ 自测未完成' : '🎉 您的体质调养建议',
+  };
+  document.getElementById('screenTitle').textContent = titles[id] || '体质分型自测';
+  document.getElementById('progressWrap').style.display = id === 'screenQuiz' ? 'flex' : 'none';
+  const stickyCta = document.getElementById('welcomeStickyCta');
+  if (stickyCta) stickyCta.classList.toggle('visible', id === 'screenWelcome');
+  window.scrollTo(0, 0);
+}
+
+function startQuiz() {
+  currentQ = 0;
+  answers = [];
+  quizIncomplete = false;
+  scoredQuestions.clear();
+  initScores();
+  showScreen('screenQuiz');
+  renderQuestion();
+}
+
+function applyQuestionScores(qIndex, multiplier) {
+  if (answers[qIndex] === undefined) return;
+  const opt = getQuestionOptions(qIndex)[answers[qIndex]];
+  Object.entries(opt.scores || {}).forEach(([k, v]) => {
+    scores[k] = (scores[k] || 0) + v * multiplier;
+  });
+  if (opt.severity) severityScore += opt.severity * multiplier;
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[currentQ];
+  const options = getQuestionOptions(currentQ);
+  document.getElementById('qNum').textContent = `第 ${currentQ + 1} 题 / 共 ${QUESTIONS.length} 题`;
+  document.getElementById('qText').textContent = q.text;
+  const container = document.getElementById('qOptions');
+  container.innerHTML = '';
+  options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    const isNeutral = opt.neutral && opt.label === SKIP_OPTION.label;
+    btn.className = 'option' + (isNeutral ? ' option-neutral' : '') + (answers[currentQ] === i ? ' selected' : '');
+    btn.textContent = opt.label;
+    btn.onclick = () => selectOption(i);
+    container.appendChild(btn);
+  });
+  const pct = ((currentQ + 1) / QUESTIONS.length) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `${currentQ + 1} / ${QUESTIONS.length}`;
+  container.classList.remove('locked');
+  optionLock = false;
+  document.getElementById('btnPrev').style.display = currentQ > 0 ? 'block' : 'none';
+}
+
+function selectOption(idx) {
+  if (optionLock) return;
+  optionLock = true;
+  if (scoredQuestions.has(currentQ)) {
+    applyQuestionScores(currentQ, -1);
+    scoredQuestions.delete(currentQ);
+  }
+  answers[currentQ] = idx;
+  document.getElementById('qOptions').classList.add('locked');
+  document.querySelectorAll('#qOptions .option').forEach((el, i) => {
+    el.classList.toggle('selected', i === idx);
+  });
+  setTimeout(() => nextQuestion(), AUTO_ADVANCE_MS);
+}
+
+function nextQuestion() {
+  if (answers[currentQ] === undefined) return;
+  if (!scoredQuestions.has(currentQ)) {
+    applyQuestionScores(currentQ, 1);
+    scoredQuestions.add(currentQ);
+  }
+  if (currentQ < QUESTIONS.length - 1) {
+    currentQ++;
+    renderQuestion();
+  } else {
+    quizIncomplete = isAllSkipAnswers();
+    showLeadScreen();
+  }
+}
+
+function prevQuestion() {
+  if (optionLock || currentQ <= 0) return;
+  if (scoredQuestions.has(currentQ)) {
+    applyQuestionScores(currentQ, -1);
+    scoredQuestions.delete(currentQ);
+  }
+  currentQ--;
+  renderQuestion();
+}
+
+function getRankedSyndromes() {
+  return Object.entries(scores)
+    .sort((a, b) => b[1] - a[1])
+    .map(([id, score]) => ({ ...SYNDROMES[id], score }));
+}
+
+function showLeadScreen() {
+  if (quizIncomplete) {
+    document.getElementById('previewBadge').textContent = '⚠️ 信息不完整';
+    document.getElementById('leadTeaser').innerHTML = `
+      <div class="teaser-title">${INCOMPLETE_MSG}</div>
+      <div class="teaser-item">请尽量按真实情况作答，不要全部选择「${SKIP_OPTION.label}」</div>
+      <div class="teaser-item">填写信息后，我们可为您安排人工解读或重新自测</div>
+      <div class="lock-hint">🔒 填写信息后可查看说明</div>`;
+    showScreen('screenLead');
+    return;
+  }
+  const ranked = getRankedSyndromes();
+  const primary = ranked[0];
+  const sev = getSeverityLevel();
+  document.getElementById('previewBadge').textContent = `🎯 初步判定：${primary.icon} ${primary.short}`;
+  document.getElementById('leadTeaser').innerHTML = `
+    <div class="teaser-title">${primary.icon} 您高度符合「${primary.name}」</div>
+    <div class="teaser-item">✅ ${primary.hook}</div>
+    <div class="teaser-item">✅ 体质偏颇：${sev.label}</div>
+    <div class="teaser-item">✅ 出生年五运六气推演</div>
+    <div class="teaser-item">✅ 食疗、穴位、起居注意事项</div>
+    <div class="teaser-item">✅ 三艾堂医师团队 24h 内解读</div>
+    <div class="lock-hint">🔒 填写信息，立即解锁完整报告</div>`;
+  showScreen('screenLead');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function validateLeadForm() {
+  const form = document.getElementById('leadForm');
+  const nameEl = form.querySelector('[name="name"]');
+  const phoneEl = form.querySelector('[name="phone"]');
+  const birthEl = form.querySelector('[name="birthYear"]');
+  const name = (nameEl.value || '').trim();
+  const phone = (phoneEl.value || '').trim();
+  const birthYear = birthEl.value;
+  const gender = form.querySelector('input[name="gender"]:checked');
+  if (!name) { showToast('请填写您的称呼'); nameEl.focus(); return false; }
+  if (!/^1[3-9]\d{9}$/.test(phone)) { showToast('请填写正确的11位手机号'); phoneEl.focus(); return false; }
+  if (!birthYear) { showToast('请选择出生年份'); birthEl.focus(); return false; }
+  if (!gender) { showToast('请选择性别'); return false; }
+  return true;
+}
+
+function handleLeadFormSubmit(e) {
+  e.preventDefault();
+  handleLeadSubmit();
+}
+
+function handleLeadSubmit() {
+  if (!validateLeadForm()) return;
+  submitLead({ preventDefault() {} });
+}
+
+async function submitLead(e) {
+  e.preventDefault();
+  const form = document.getElementById('leadForm');
+  const fd = new FormData(form);
+  leadData = {
+    name: fd.get('name'),
+    phone: fd.get('phone'),
+    birthYear: parseInt(fd.get('birthYear'), 10) || '',
+    gender: fd.get('gender') || '',
+    contactTime: fd.get('contactTime') || '',
+    timestamp: new Date().toISOString(),
+  };
+  const btn = document.getElementById('btnSubmit');
+  btn.disabled = true;
+  btn.textContent = '正在生成报告…';
+  try {
+    const ranked = getRankedSyndromes();
+    const sev = getSeverityLevel();
+    const wylqReport = !quizIncomplete && leadData.birthYear
+      ? WYLQ.generate(leadData.birthYear, ranked[0].id)
+      : null;
+    const payload = {
+      formSlug: CONFIG.FORM_SLUG,
+      ...leadData,
+      primarySyndrome: quizIncomplete ? INCOMPLETE_MSG : ranked[0].name,
+      primaryScore: quizIncomplete ? 0 : ranked[0].score,
+      secondarySyndrome: quizIncomplete ? '' : (ranked[1]?.score > 0 ? ranked[1].name : ''),
+      allScores: scores,
+      severityLevel: quizIncomplete ? '' : sev.level,
+      severityScore: quizIncomplete ? 0 : severityScore,
+      incomplete: quizIncomplete,
+      answers,
+      wylqReport,
+      source: '九型体质自测',
+    };
+    if (CONFIG.API_URL) {
+      try {
+        const res = await fetch(CONFIG.API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          console.warn('API submit failed', err);
+        }
+      } catch (err) {
+        console.warn('API submit failed', err);
+      }
+    }
+    try {
+      const logs = JSON.parse(localStorage.getItem('constitution_leads') || '[]');
+      logs.push(payload);
+      localStorage.setItem('constitution_leads', JSON.stringify(logs));
+    } catch (_) {}
+    renderResult();
+    showScreen('screenResult');
+  } catch (err) {
+    console.error('submitLead failed', err);
+    showToast('报告生成失败，请重试');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '立即解锁我的专属报告 →';
+  }
+}
+
+function renderIncompleteResult() {
+  const genderLabel = leadData.gender === '女' ? '女士' : leadData.gender === '男' ? '先生' : '';
+  document.getElementById('resultContent').innerHTML = `
+    <div class="result-header incomplete">
+      <h2>${INCOMPLETE_MSG}</h2>
+      <p>您在每一题都选择了「${SKIP_OPTION.label}」，系统缺少有效症状信息，暂时无法生成分型报告。<br>建议返回重新自测，并尽量勾选与您情况最接近的选项。</p>
+    </div>
+    <div class="incomplete-actions">
+      <button type="button" class="btn btn-primary btn-cta" onclick="restartQuiz()">返回重新自测 →</button>
+    </div>
+    <div class="cta-box">
+      <p>${leadData.name ? leadData.name + genderLabel + '，' : ''}如需人工协助，欢迎联系我们</p>
+      <img class="wechat-qr" src="${CONFIG.WECHAT_QR_IMAGE}" alt="三艾堂微信二维码">
+      <div class="phone">${CONFIG.CONTACT_PHONES.map(p => `<a href="tel:${p}">${p}</a>`).join('　')}</div>
+      <div class="wechat">扫码添加微信 · 或拨打电话预约</div>
+    </div>`;
+}
+
+function renderResult() {
+  if (quizIncomplete) {
+    renderIncompleteResult();
+    return;
+  }
+  const ranked = getRankedSyndromes();
+  const primary = ranked[0];
+  const secondary = ranked[1]?.score > 2 ? ranked[1] : null;
+  const testimonial = TESTIMONIALS[primary.id];
+  const genderLabel = leadData.gender === '女' ? '女士' : leadData.gender === '男' ? '先生' : '';
+  const sev = getSeverityLevel();
+  const wylq = leadData.birthYear ? WYLQ.generate(leadData.birthYear, primary.id) : null;
+
+  let html = `
+    <div class="result-header">
+      <div class="match-badge">✅ ${sev.label} · 九型体质判定</div>
+      <div class="score-ring"><span class="type">${primary.icon}<br>${primary.short}</span></div>
+      <h2>${primary.name}</h2>
+      <div class="pathology">${primary.pathology}</div>
+    </div>
+    <div class="urgency-banner">⚠️ ${sev.tip}<br>${primary.urgency}</div>
+    <div class="offer-card">
+      <h3>🎁 ${leadData.name || '您'}的专属福利</h3>
+      <div class="highlight">${CONFIG.OFFER_PRICE}</div>
+      <div class="offer-compare">
+        <div class="offer-desc">${CONFIG.OFFER_TEXT}</div>
+        <div><span class="offer-origin">原价 ${CONFIG.OFFER_ORIGIN}</span></div>
+      </div>
+      <p>三艾堂医师团队 · 中药+药油+艾灸+食疗四法一体 · 分证调理</p>
+    </div>
+    <div class="result-card">
+      <h3>💡 为什么这样判断？</h3>
+      <p><strong>${primary.hook}</strong></p>
+      <p style="margin-top:10px">${primary.summary}</p>
+    </div>
+    ${wylq ? `
+    <div class="result-card">
+      <h3>🧭 出生年五运六气</h3>
+      <p><strong>${wylq.summary}</strong></p>
+      <p style="margin-top:10px"><strong>五运定位：</strong>${wylq.wuyun.zangfu} · ${wylq.wuyun.tendency}</p>
+      <p style="margin-top:6px"><strong>六气提示：</strong>${wylq.liuqiTendency}</p>
+      <p style="margin-top:6px"><strong>岁谷食疗：</strong>${wylq.wuyun.food}</p>
+      <p style="margin-top:6px"><strong>间谷食疗：</strong>${wylq.liuqiFood}</p>
+      <p style="margin-top:6px"><strong>体质加减：</strong>${wylq.constitutionAdjust}</p>
+    </div>` : ''}
+    <div class="result-card">
+      <h3>📋 您的典型表现</h3>
+      <ul>${primary.symptoms.map(s => `<li>${s}</li>`).join('')}</ul>
+    </div>
+    <div class="result-card">
+      <h3>🔥 三艾堂调养方向</h3>
+      <p>${primary.method}</p>
+      <p style="margin-top:10px"><strong>参考周期：</strong>${primary.cycle}</p>
+      <p style="margin-top:6px"><strong>日常建议：</strong>${primary.daily}</p>
+    </div>`;
+
+  if (testimonial) {
+    html += `
+    <div class="testimonial">
+      ${testimonial.text}
+      <div class="author">${testimonial.author}</div>
+    </div>`;
+  }
+
+  if (secondary) {
+    html += `
+    <div class="result-card">
+      <h3>📎 兼夹分型提示</h3>
+      <p>您同时有 <strong>${secondary.name}</strong> 倾向。多数人存在复合体质，建议到馆后由医师综合辨证，分主次调理。</p>
+      <div class="syndrome-tags">
+        <span class="tag">${primary.short} · 主调</span>
+        <span class="tag secondary">${secondary.short} · 兼夹</span>
+      </div>
+    </div>`;
+  }
+
+  html += `
+    <div class="result-card">
+      <h3>⚠️ 调理前须知</h3>
+      <p>${primary.contraindication}</p>
+    </div>
+    <div class="cta-box">
+      <p>${leadData.name ? leadData.name + genderLabel + '，' : ''}医师将在 <strong>24 小时内</strong> 致电<br>为您解读报告并预约到馆面诊</p>
+      <img class="wechat-qr" src="${CONFIG.WECHAT_QR_IMAGE}" alt="三艾堂微信二维码">
+      <div class="phone">${CONFIG.CONTACT_PHONES.map(p => `<a href="tel:${p}">${p}</a>`).join('　')}</div>
+      <div class="wechat">扫码添加微信 · 或拨打电话预约</div>
+    </div>`;
+
+  document.getElementById('resultContent').innerHTML = html;
+}
+
+function shareResult() {
+  const url = window.location.href.split('?')[0];
+  if (navigator.share) {
+    navigator.share({
+      title: '你属于哪一种中医体质？',
+      text: '免费自测！90秒测出九型体质，结合五运六气生成专属调养建议 🌿',
+      url,
+    }).catch(() => copyLink(url));
+  } else {
+    copyLink(url);
+  }
+}
+
+function copyLink(url) {
+  navigator.clipboard?.writeText(url).then(() => {
+    showToast('链接已复制，可发给朋友');
+  }).catch(() => showToast('请手动复制页面链接分享'));
+}
+
+function restartQuiz() {
+  startQuiz();
+}
+
+document.querySelectorAll('.gender-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    btn.querySelector('input').checked = true;
+  });
+});
+
+(function initPage() {
+  const birthSelect = document.getElementById('birthYear');
+  if (birthSelect) {
+    const currentYear = new Date().getFullYear();
+    for (let y = currentYear - 18; y >= 1940; y--) {
+      const opt = document.createElement('option');
+      opt.value = y;
+      opt.textContent = y + ' 年';
+      birthSelect.appendChild(opt);
+    }
+  }
+
+  const countEl = document.getElementById('liveCount');
+  if (countEl) countEl.textContent = '九型体质 + 五运六气报告已开放';
+})();
+</script>
+
+<p class="disclaimer">
+  本自测基于九型体质分类标准，并结合出生年五运六气推演，结果仅供参考，不能替代医师面诊。<br>
+</p>
+
+</body>
+</html>
